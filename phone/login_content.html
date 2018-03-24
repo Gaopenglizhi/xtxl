@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="login_content/css/main.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver uinn-a3 ub-fv">
+            <div class="ub ub-ver uinn uinn-at1">
+                
+                    <div class="umar-a  bc-border ">
+                        <div class="ub ub-ac ubb umh5 bc-border ">
+                            <div class=" uinput ub ub-f1">
+                                <img src="login_content/css/myImg/dl_user.png" class="uinn fa loginimg1 loginstyle" ></img>
+                               
+                                <input placeholder="请输入您的手机号" type="text" class="ub-f1 logininput" id="mobile">
+                                 <img src="login_content/css/myImg/cha.png" class="uinn loginimg" onclick="qk();" ></img>
+                            </div>
+                        </div>
+                        <div class="ubb ub ub-ac umh5 bc-border ">
+                            <div class=" uinput ub ub-f1 ">
+                                <img src="login_content/css/myImg/dl_password.png" class="uinn fa loginimg1 loginstyle" ></img>
+                                
+                                <input placeholder="请输入您的密码" type="password" class=" ub-f1 logininput"  id="upwd">
+                                <img src="login_content/css/myImg/cha.png" class="uinn loginimg" onclick="qk1();" ></img>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <center>
+                        <div class="uinn-at1 ">
+                            <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a "   id="login">
+                                登录
+                            </div>
+                        </div>
+                        </center>
+                        <div class="ub ub-ac  umh5 bc-border ">
+                            <div id="zc" class="ub ub-f3 btnleft">
+                               立即注册
+                            </div>
+                             <div id="zhmm" class="ub btnright">
+                               忘记密码
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/yangyan.js"></script>
+        <script src="js/md5.js"></script>
+    </body>
+    <script>
+    var photo='';
+        appcan.ready(function() {
+  
+        })
+        appcan.button("#login", "ani-act", function() {
+            login();
+        })
+           appcan.button("#zc", "ani-act", function() {
+          appcan.window.open({
+                name:'register',
+                data:'register.html',
+                aniId:'10' 
+            })       
+        })
+          appcan.button("#zhmm", "ani-act", function() {
+          appcan.window.open({
+                name:'wjmm',
+                data:'wjmm.html',
+            })
+         })
+     function login() {
+           
+            var mobile=$("#mobile").val();
+            var pwd=$("#upwd").val();
+            var userId=0;
+            var jsonStr="";
+            var name="";
+            var url="";
+            var checkcode="";
+           // var photo='';
+            if (!isDefine(mobile)) {
+                appcan.window.openToast("请输入手机号！", '2000', '5', 0);
+                return;
+            }else if (!isDefine(pwd)) {
+                appcan.window.openToast("请输入密码！", '2000', '5', 0);
+                return;
+            }else if (yzsj(mobile)==false) {
+                appcan.window.openToast("手机号错误", '2000', 5, 0);
+                return;
+            }else{
+                var pass=md5(pwd).toUpperCase();
+                checkcode=md5(mobile+pass).toUpperCase();
+                jsonStr='{"UserName":"'+mobile+'","CheckCode":"'+checkcode+'"}';
+             
+                url=GetPostUrl.gUrl() +"MobileService.asmx/Login?jsonStr="+jsonStr;
+           
+           $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                      
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+                
+                        userId=data.Result[0].Id;//获取到当前用户的ID
+                        //photo=data.Result[0].avatar;//获取头像ID
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                        var obj=JSON.stringify(data.Result[0]);//把取回来的数据作为一个对象存起来
+                    //    console.log('22222222=='+obj);
+                        appcan.locStorage.setVal('userName',mobile);
+                        appcan.locStorage.setVal('checkcode',checkcode);
+                        appcan.locStorage.setVal('photo',photo);
+                        appcan.locStorage.setVal('islog',1); 
+                        appcan.locStorage.setVal('userId',userId); //登录状态记录下来，传给其他页面
+                       
+                     //  console.log('11111111=='+appcan.locStorage.val('yemian'));
+                            if (appcan.locStorage.getVal('yemian') == 'orderlist') {
+                                              appcan.locStorage.setVal('yemian','login');
+                                                   appcan.window.open({
+                                                      name : "content"+Math.random(),
+                                                      data : "orderlist.html"
+                                                   
+                                              });
+                                                 
+                                                 //appcan.window.publish('login',obj);//登录成功，回传值到订单页
+                                                 //appcan.window.publish('islog', 1);
+                                                // appcan.locStorage.setVal('userId',userId);//登录状态记录下来，传给其他页面
+                                                 return;
+                                    }else if(appcan.locStorage.getVal('yemian') == 'personal'){
+                                              
+                                              appcan.locStorage.setVal('ym','2');
+                                               
+                                         appcan.window.open({
+                                                      name : "index"+Math.random(),
+                                                      data : "index.html"
+                                                   
+                                              });
+                                                
+                                                 //appcan.window.publish('islog', 1);
+                                              //   appcan.locStorage.setVal('userId',userId);//登录状态记录下来，传给其他页面
+                                                 //appcan.window.publish('login',obj);//登录成功，回传值到个人中心
+                                                
+                                    }
+                                    
+                                    else
+                                    {  
+                                            appcan.window.open({
+                                                      name : "content"+Math.random(),
+                                                      data : "index.html"
+                                                   
+                                              });
+                                    }           
+                                 //如果是从列表打开的登录------------------
+
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('网络出错了!','2000',5,0);
+                }
+            });
+           }
+        }
+        
+        function qk(){
+          var mobile=$("#mobile").val();  
+          if(mobile!=""){
+            mobile="";
+           document.getElementById('mobile').value = mobile;
+          }
+          
+        }
+ function qk1(){
+          var upwd=$("#upwd").val(); 
+         if(upwd!=""){
+              upwd="";
+           document.getElementById('upwd').value = upwd;
+          }
+          
+        }
+         function yzsj(str) {
+         var re = /^1\d{10}$/
+         if (re.test(str)) {
+             return true;
+           } else {
+            return false;
+             }             
+        }
+              //md5加密           
+       function md5(md5){
+          var Md5="";
+          Md5=hex_md5(md5); 
+          return Md5;    
+        }
+  
+
+    </script>
+</html>

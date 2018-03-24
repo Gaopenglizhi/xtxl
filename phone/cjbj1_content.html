@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <script type="text/javascript" src="js/ty.js"></script>
+    <link rel="stylesheet" href="css/ui-base.css">
+    <link rel="stylesheet" href="css/ui-color.css">
+    <link rel="stylesheet" href="css/jiawen.css">
+
+    <link rel="stylesheet" href="css/appcan.icon.css">
+    <link rel="stylesheet" href="css/appcan.control.css">
+
+    <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="order_content/css/main.css">
+    <script src="js/appcan.js">
+    </script>
+    <script src="js/appcan.control.js">
+    </script>
+    <script type="text/javascript" src="list/js/jquery-1.11.1.min.js">
+    </script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/TableFreeze.js"></script>
+    <!-- jQuery Include -->
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link href="list/css/mobiscroll.custom-2.17.0.min.css" rel="stylesheet"
+          type="text/css" />
+    <script src="list/js/mobiscroll.custom-2.17.0.min.js" type="text/javascript">
+    </script>
+
+    <style type="text/css">
+        /* Demo Page styling, you can ignore this in your implementation */ body {
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+            font-family: arial, verdana, sans-serif;
+        }
+
+        input, select {
+            width: 100%;
+            padding: .625em;
+            margin: 0 0 .625em 0;
+            border: 1px solid #aaa;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .header {
+            padding: .625em;
+            background: #5185a8;
+        }
+
+            .header h1 {
+                margin: 0;
+                padding: 0;
+                color: #fff;
+                text-align: center;
+                font-size: 1.25em;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px #000;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+        /* Listview demo styling */
+
+        .mbsc-lv-cont {
+            margin: 1em -1em;
+        }
+
+        .size {
+            font-size: .9em;
+        }
+
+        .txtcolor {
+            color: #6f6f6f;
+        }
+
+        .txtcolor1 {
+            color: #d10000;
+        }
+
+        .txtcolor2 {
+            color: #6ec00e;
+        }
+
+        .c-gra1 {
+            background-color: #f6f6f6;
+        }
+
+        .em1 {
+            height: 0;
+            width: 1em;
+        }
+
+        table {
+            empty-cells: show;
+            border-spacing: 0;
+        }
+
+        table {
+            font-family: 宋体;
+            green solid;
+            background-color: white;
+        }
+
+            table td {
+                text-align: center;
+            }
+
+            table .tabTh {
+                color: green;
+                font-weight: bold;
+                background-color: #f1faee;
+            }
+
+        .em1_height {
+            width: 100%;
+            height: 1em;
+        }
+
+        .em1_width {
+            width: 1em;
+        }
+
+        .cjbj_td {
+            height: 2.3em;
+            min-width: 5em;
+               font-size: 0.75em;
+        }
+
+        .cjbj_tr {
+            border-bottom: 1px solid #CCCCCC !important;
+        }
+
+        .br_bg1 {
+            background-color: #e8f2fb;
+        }
+
+        .br_bg2 {
+            background-color: #f7f8fa;
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body class="um-vp bc-bg" ontouchstart id="body_cjbj">
+    <div class="em1_height" id="em1"></div>
+    <div class="ub center">
+        <div class="ub em1_width"></div>
+
+        <div class="content ui" id="content_cjbj">
+            <div data-role="fieldcontain" style=" background-color: #f7f7f7" class="demo-cont" id="demo_cont_treelist">
+                <ul id="demo_treelist" class="level-0"></ul>
+            </div>
+            <div id="addPhotoLabel">
+            </div>
+            <div id="div_Test3" style="OVERFLOW: auto;width:100%;padding:0px">
+
+                <table id="tab_Test31" class="ub-fh  tx-c ">
+                    <tr id="tr1" class="cjbj_tr" style="color: #cf4e00;font-weight:bold;border-top: 1px solid #CCCCCC !important;">
+                        <td>
+                            <div id='gdt1' style="OVERFLOW: auto;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="tr2">
+                        <td>
+                            <div id='gdt2' style="OVERFLOW: auto;">
+<table><tr ><td id='gdt22'></td><td id='gdt3' ></td></td></tr></table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="ub em1_width"></div>
+    </div>
+    <div class="em1_height"></div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var nScrollTop = 0;
+            var nScrollLeft = 0;
+            $("#gdt2").scroll(function () {
+                nScrollLeft = $(this)[0].scrollLeft;
+                $("#gdt1").scrollLeft(nScrollLeft);
+            });
+            $("#gdt1").scroll(function () {
+                nScrollLeft = $(this)[0].scrollLeft;
+                $('#gdt2').scrollLeft(nScrollLeft);
+            });
+        });
+        var br_bg = 1;
+        function getbr_bg() {
+            if (br_bg == 1) {
+                br_bg = 2;
+            } else {
+                br_bg = 1;
+            }
+            return "br_bg" + br_bg;
+        }
+        var a = 0;
+        function addGuige(a) {
+               $("#lgg").css("min-width","4em");
+            var xilie;
+            var dianya;
+            var jiegou;
+            var xinghao;
+            var guige;
+            var jiage;
+            var jpx = a;
+            if (jpx != '') {
+                var array = jpx.split(" ");
+                if ((!isNaN(array[0]))) {
+                    var gg = showNamebyID(array[0], array[1], array[2]);
+                   $.ajax({
+                        dataType: 'text',
+                        // url : 'http://testmas.appcan.cn:9000/ODBC/shopList?pageNum=1&count=5&typeId='+typeId,
+                        url: GetPostUrl.gUrl() + 'MobileService.asmx/GetCPLB?jsonStr={"id":' + gg + ',"class_layer":3}',
+                        type: 'GET',
+                        data: {},
+                        offline: true,
+                        offlineDataPath: 'wgt://aaa/',
+                        success: function (data) {
+                            data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                            var str = '';
+                            var tr = '';
+                            var tr1 = '';
+                            var tr2 = '';
+                            var td = '';
+                            $("div[name='oDivL_tab_Test3']").each(function (i, n) {
+                                //document.getElementsByName(this).innerHTML = "";
+                                $(this).html("");
+                            });
+                            $("table[name='oTableLH_tab_Test3']").each(function (i, n) {
+                                document.getElementsByName(this).innerHTML = "";
+                                $(this).html("");
+                            });
+                            $("div[name='oDivH_tab_Test3']").each(function (i, n) {
+                                //document.getElementsByName(this).innerHTML = "";
+                                $(this).html("");
+                            });
+                            if (data.Error.ErrorCode == '0') {
+                                if (data.Result.length > 0) {
+                                    $('#tab_Test3').html('');
+                                    var guige = new Array();
+                                    data = data.Result;
+                                    var table_head = "<table><tr>";
+                                    table_head += "<td class='cjbj_td' id='lgg'>规格</td>";
+                                    var table_left = "<table>";
+                                    table += "</tr>";
+                                    for (var i = 0; i < data.length; i++) {
+                                        table_head += "<td class='cjbj_td'>";
+                                        table_head += data[i].Value;
+                                        table_head += "</td>";
+                                        for (var j = 0; j < data[i].Result.length; j++) {
+                                            var guigehanghao = guige.indexOf(data[i].Result[j].Value);
+                                            if (guigehanghao == -1) {
+                                                guige[guige.length] = data[i].Result[j].Value;
+                                                table_left += "<tr class='cjbj_tr'><td class='cjbj_td' style='background-color: #f1f1f1;'>";
+                                                table_left += data[i].Result[j].Value;
+                                                table_left += "</td></tr>";
+                                            }
+                                        }
+                                    }
+                                    table_head += "</tr></table>";
+                                    table_left += "</table>";
+                                    var table = "<table id=\"table_shuju\">";
+                                    for (var i = 0; i < guige.length; i++) {
+                                        br_bg = i % 2;
+                                        table += "<tr class='cjbj_tr'>";
+                                        for (var j = 0; j < data.length; j++) {
+                                            table += "<td class='cjbj_td " + getbr_bg() + "'></td>";
+                                        }
+                                        table += "</tr>";
+                                    }
+                                    table += "</table>";
+                                    $('#guigezi').text("规格");
+                                    $('#gdt1').html(table_head);
+                                    $('#gdt22').html(table_left);
+                                    $('#gdt3').html(table);
+                                    for (var i = 0; i < data.length; i++) {
+                                        for (var j = 0; j < data[i].Result.length; j++) {
+                                            var guigehanghao = guige.indexOf(data[i].Result[j].Value);
+                                            $("#table_shuju tr:eq(" + guigehanghao + ") td:eq(" + i + ")").text(data[i].Result[j].Result[0].Value);
+                                            $("#table_shuju tr:eq(" + guigehanghao + ") td:eq(" + i + ")").attr("onclick","ckkc("+data[i].Id+")");
+                                        }
+                                    }
+                                    $("#tab_Test31").height($("#div_Test3").height);
+                                    var tr1 = $("#tr1").height();
+                                    $("#tr2").height($("#div_Test3").height() - tr1 - 8);
+                                    $("#gdt2").height($("#div_Test3").height() - tr1 - 8);
+                                    //$("#gdt3").height($("#div_Test3").height() - tr1 - 8);
+                                    var guigezi_width = $("#guigezi").width();
+                                    var tr2 = $("#body_cjbj").width() - $("#em1").height() * 2;
+                                    $("#gdt1").width(tr2);
+                                    $("#gdt2").width(tr2);
+                                    //$("#gdt3").width(tr2 - guigezi_width);
+                                } else {
+                                    $('#tab_Test3').html('');
+                                    $('#tab_Test3').html("暂无数据哦");
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+            else {
+                appcan.window.openToast('请选择类别!', '2000', 5, 0);
+            }
+              
+ 
+        }
+
+        function showNamebyID(index1, index2, index3) {
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + "").attr("value");
+        }
+
+        function getData() {
+            var tr = '';
+            var tr1 = '';
+            var tr2 = '';
+
+            var id = appcan.locStorage.getVal('userId');
+            var Uname = appcan.locStorage.getVal('userName');
+            var code = appcan.locStorage.getVal('checkcode');
+
+            if (id == null) {
+                alert('请先登录');
+                appcan.window.open("login" + Math.random(), "login.html");
+                appcan.locStorage.setVal('yemian', 'sub');
+            }
+            var jsonStr = '{\"UserName\":\"' + Uname + '\",\"CheckCode\":\"' + code + '\",\"uid\":\"' + id + '\"}';
+            $.ajax({
+                dataType: 'text',
+                // url : 'http://testmas.appcan.cn:9000/ODBC/shopList?pageNum=1&count=5&typeId='+typeId,
+                url: GetPostUrl.gUrl() + 'MobileService.asmx/GetCPLB?jsonStr=' + jsonStr,
+                type: 'GET',
+                data: {},
+                offline: true,
+                offlineDataPath: 'wgt://aaa/',
+                success: function (data) {
+                    $('#demo_treelist').html('');
+                    $('#tab_Test3').html('');
+
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                    var str = '';
+                    if (data.Error.ErrorCode == '0') {
+                        if (data.Result.length > 0) {
+                            for (var i = 0; i < data.Result.length; i++) {
+
+                                str += '<li id=l1_' + data.Result[i].Index + '>' + data.Result[i].Value;
+
+                                if ((data.Result[i].Result != null) && (data.Result[i].Result.length > 0)) {
+
+                                    str += '<ul>';
+                                    for (var j = 0; j < data.Result[i].Result.length; j++) {
+                                        str += '<li id=l2_' + data.Result[i].Result[j].Index + '>' + data.Result[i].Result[j].Value;
+
+                                        if ((data.Result[i].Result[j].Result != null) && (data.Result[i].Result[j].Result.length > 0)) {
+                                            str += '<ul>';
+                                            for (var k = 0; k < data.Result[i].Result[j].Result.length; k++) {
+                                                str += '<li value=' + data.Result[i].Result[j].Result[k].Id + ' id=l3_' + data.Result[i].Result[j].Result[k].Index + '>' + data.Result[i].Result[j].Result[k].Value;
+
+                                                str += '</li>';
+                                            }
+                                            str += '</ul></li>';
+                                        } else {
+                                            str += '</li>';
+                                        }
+                                    }
+
+                                    str += '</ul></li>';
+                                } else {
+                                    str += '</li>';
+                                }
+                            }
+                            $('#tab_Test3').append('<tr id="tr1" class=" bc-border   ub-ac uinn-a91 tabletrwz"><td class="ub-f1  uw-infor ut-s   umar-r-infor ulev-app1 floatTop">规格</td>' + tr + '</tr>' + tr1);
+                            $('#demo_treelist').append(str);
+                            init();
+                            $("#demo_treelist_dummy").hide();
+                        } else {
+                            $('#demo_treelist').append('<div class="ub ub-pc ub-ac ulev-0 umar-t">暂无数据</div>');
+                        }
+                        var head_height = $("#demo_cont_treelist").height() + $("#addPhotoLabel").height();
+                        var body_height = $("#body_cjbj").height();
+                        $(".content").height(body_height - $("#em1").height() * 2);
+                        $("#div_Test3").height(body_height - head_height - $("#em1").height() * 2);
+                        $(".content").width($("#body_cjbj").width() - $("#em1").height() * 2);
+                        $(".em1_width").height($(".content").height());
+                    }
+                },
+                error: function (xhr, status, errMessage) {
+                    appcan.window.openToast('登录失败!', '2000', 5, 0);
+                }
+            });
+        }
+        appcan.ready(function () {
+
+            getData();
+
+ 
+        });
+        var jpx;
+        function init() {
+            $('#demo_treelist').mobiscroll().treelist({
+                mode: 'Scroller',
+                rows: '3',
+                onChange: function (valueText, inst) {
+                    addGuige(valueText);
+                },
+                onShow: function (html, valueText, inst) {
+                    addGuige(valueText);
+                },
+                showLabel: true,
+                labels: ['系列', '电压', '结构'],
+                display: 'inline',
+                mode: 'scroller',
+                fixedWidth: 90,
+                minWidth: 90,
+                lang: 'zh' // More info about labels: http://docs.mobiscroll.com/2-17-0/list#!opt-labels
+            });
+            
+ 
+           
+          /*  if($('.cjbj_td').text()=="规格")
+            {alert(5);
+                $('.cjbj_td').css("min-width","8em");
+            }*/
+        }
+        function ckkc(xhid) {
+            appcan.locStorage.setVal('xhid', xhid);
+            appcan.window.open({
+                name: 'kcslt',
+                data: 'kcslt.html'
+            });
+        }
+    </script>
+</body>
+</html>

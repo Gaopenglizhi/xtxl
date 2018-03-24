@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+       <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        
+     <style type="text/css">
+        .div_dd{ border-top:2px  solid #cdcdcd;border-bottom:2px  solid #d7d7d7; background:#fff; padding:10px; margin:10px 5px 10px 5px;} 
+        .div_ddbh{
+        color:#7a7979; font-size:0.9em; line-height:300%;} .div_ddbh span{ } .div_ddbh
+        font{ margin:0px 20px;} .div_ddbh font a:link{color:#7a7979; text-decoration:none;}
+        .div_ddbh font a:visited{color:#7a7979; text-decoration:none;} .div_ddbh
+        font a:hover{color:#7a7979; text-decoration:none;} .div_ddxx{ padding:10px;
+         margin-bottom: 10px; } .div_ddxx ul{ margin:0px
+        0px; padding:0px 0px;} .div_ddxx ul li{ list-style:none;} .div_ddxx li{font-size:0.9em;
+        color:#484848; line-height:280%; padding:0px 20px;} .div_ddxx li.bg01{
+        background:#f9f9f9;} .div_ddxx font{ color:#ff6600; margin:0px 20px;} .div_ddxx
+        font a:link{color:#ff6600; text-decoration:none;} .div_ddxx font a:visited{color:#ff6600;
+        text-decoration:none;} .div_ddxx font a:hover{color:#ff6600; text-decoration:none;}
+   .t-red1
+{
+    color:#ff6100;
+}
+.bg{ background:  f1f1f1}
+    </style>
+    </head>
+    <body class="um-vp bc-bg1" ontouchstart>
+        <div class="ub ub-ver">
+            <div id="order_list"  class="ub ub-ver uinn-a1 ub-f1">
+             
+            </div>
+
+        </div>
+    </body>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.listview.js"></script>
+        <script src="js/md5.js"></script>
+    <script>
+        var titHeight = 0;
+        var typeId = '00';
+        var typeName = [];
+        var obj2={};
+        var uid="";
+        var UserName="";
+        var checkcode="";
+        var jsonStr="";
+        var status="";
+        var fhsj="";
+        appcan.ready(function() {
+            //titHeight = appcan.getLocVal('titHeight');
+            //appcan.setLocVal("height1",height1);
+            //typeId  = appcan.getLocVal('typeId');
+/*
+            if(typeId==undefined){
+                typeId = '00';
+            }*/
+            uid = appcan.locStorage.getVal('userId');
+             if(uid==undefined){
+                 alert('请先登录');
+                 appcan.window.open("login","login.html");
+                 appcan.locStorage.setVal('yemian', 'orderlist');
+             }else{
+                 getFoodList();
+             } 
+        });
+
+         //获取订单列表
+        function getFoodList(){
+            var page="0";
+            var pageSize="20";
+            //appcan.locStorage.setVal('yemian','meishi');
+             uid=appcan.locStorage.getVal('userId');
+             UserName=appcan.locStorage.getVal('userName');
+             checkcode=appcan.locStorage.getVal('checkcode');
+           //  console.log('qqqqqqqqqq=='+uid);
+           //  console.log('qqqqqqqqqq=='+UserName);
+           //  console.log('qqqqqqqqqq=='+checkcode);
+             jsonStr='{"pageIndex":"'+page+'","pageSize":"'+pageSize+'","UserName":"'+UserName+'","CheckCode":"'+checkcode+'","uid":'+uid+'}';
+            
+            var url=GetPostUrl.gUrl() +'MobileService.asmx/GetOrdersList?jsonStr='+jsonStr;
+          //  console.log('url111=='+url);
+               $.ajax({dataType:'text',
+                url : url,
+                type : 'GET',                           
+                data : {
+
+                },
+/*
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',*/                            
+                success : function(data) {
+                    //alert(data);
+                     $('#order_list').html('');  
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                    var str="";                                         
+                    if(data.Error.ErrorCode=='0'){                   
+                        if(data.Result.length>0){
+                        //循环展示数据
+                            for(var i=0;i<data.Result.length;i++){
+
+                                       if(data.Result[i].OrderStatus==0){
+                                           status="未支付"
+                                       }else if(data.Result[i].OrderStatus==1){
+                                           status="已支付定金"
+                                       }else if(data.Result[i].OrderStatus==2){
+                                           status="已发货"
+                                       }else if(data.Result[i].OrderStatus==3){
+                                           status="完成"
+                                       }
+                                       if(data.Result[i].Sendtime!=null){
+                                         fhsj=data.Result[i].Sendtime;
+                                       }
+                                      // console.log("111111111=="+data.Result[i].OrderStatus);
+           str+=' <div  class="div_dd">  <div class="div_ddbh">订单编号<span id="bh">  '
+                + data.Result[i].OrderNo+' </span>';
+                
+                if(data.Result[i].OrderStatus==0){
+                str+='&nbsp;&nbsp;<span class=\" yjll \" onclick="Delete(\''+data.Result[i].Id+'\');"> 取消订单</span>';
+                }
+                str+='</div>'
+                +'<div onclick="openDetail(\''+data.Result[i].Id+'\',\''+data.Result[i].OrderStatus+'\')" class="div_ddxx">  <ul> '+
+               '<li class="bg01" > 订单状态：<span class="t-red1 ufm1"> '+status+' </span></li>'+
+               ' <li > 订单金额：  <span id="hj" class="t-red1 ufm1">  '
+                        +data.Result[i].Orderje+'  </span>  </li> <li class="bg01"> 发货时间： <span id="sj" class="t-red1 ufm1" > '
+                            +fhsj+'  </span>  </li>  <li  > 下单时间： <span id="xdrq" class="t-red1 ufm1"> '
+                         +data.Result[i].Createtime+'   </span>  </li>  <li class="bg01" >  预付定金：  <span id="xdrq" class="t-red1 ufm1"> '
+                     +data.Result[i].PaymentFee+'  </span>  </li>  </ul>    </div>  </div>  ';
+                                       
+                                       
+                                         
+                                       
+                            } 
+                            if(str==""){
+                              appcan.window.openToast("订单是空的赶快够买吧！",'2000',5,0);  
+                            }else{
+                                $('#order_list').append(str);
+                            }
+                             
+                        }else{
+                            appcan.window.openToast("订单是空的赶快够买吧！",'2000',5,0);  
+                        }
+                    }
+                }
+            });
+}
+
+
+      function Delete(id){
+                 
+                 if(window.confirm('您确定要删除吗？')){
+                  Deletedata(id);
+                  return true;
+                }
+                  
+             }
+             
+        function Deletedata(orderid){
+            var page="0";
+            var pageSize="5";
+            //appcan.locStorage.setVal('yemian','meishi');
+             uid=appcan.locStorage.getVal('userId');
+             UserName=appcan.locStorage.getVal('userName');
+             checkcode=appcan.locStorage.getVal('checkcode');
+            
+             jsonStr='{"orderId":"'+orderid+'","UserName":"'+UserName+'","CheckCode":"'+checkcode+'","uid":"'+uid+'"}';
+            
+            var url=GetPostUrl.gUrl() +'MobileService.asmx/OrderCancel?jsonStr='+jsonStr;
+           
+             $.ajax({dataType:'text',
+                url : url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                    //alert(data);
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                                       
+                    if(data.Error.ErrorCode=='0'){                                         
+                         appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                         getFoodList();   
+                    }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+                 error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('删除失败!','2000',5,0);
+                }
+            });
+          
+        }
+        function openDetail(id,ozt){
+            appcan.setLocVal('orderId',id);
+            window.localStorage["Ostatus"]=ozt;
+                 appcan.window.open({
+                           name : "order"+Math.random(),
+                           data : "order.html",
+                       });
+          
+                }
+       //md5加密           
+       function md5(md5){
+          var Md5="";
+          Md5=hex_md5(md5); 
+          return Md5;    
+        }
+      //大写转换
+         function englishConvert(str) {
+               $("#content").val(text.toUpperCase());
+            }
+
+           
+         function alert1(){
+                 appcan.window.openToast("支付 完成！", 3000, 5, 0);        
+                }
+    </script>
+</html>

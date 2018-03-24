@@ -1,0 +1,141 @@
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/jiawen.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+</head>
+<body>
+        <div id="page_0" class="up ub ub-ver" tabindex="0">
+            <!--header开始-->
+         <div id="header" class="uh bc-text-head ub bc-head head-p">
+           <div  id="container">
+           <div class="btn ub ub-ac bc-text-head ub-pc sc-sub1 duan" style="position:absolute;left:10px;" onclick="jclx();">
+                    <span style="font-size:  0.8125em ;">
+                                                驾车路线
+                    </span>
+           </div>
+           </div>
+                  
+            </div>
+
+            <!--header结束--><!--content开始-->
+            <div id="content" style="top: 3em" class="ub-f1 tx-l">
+
+            </div>
+            
+            <!--content结束-->
+        </div>
+    
+    
+    
+
+      <script src="js/appcan.js"></script>
+      <script src="js/appcan.control.js"></script>
+</body>
+<script type="text/javascript">
+    
+        var titHeight =$('#header').offset().height;
+        var content1 =$('#content').offset().width;
+        var content2 =$('#content').offset().height;
+         var jingdu="";
+         var weidu="";
+         var type="10";
+        appcan.ready(function() {
+          data();
+
+        });
+        
+            function data(){
+                type='1';
+                jsonStr='{"type":"'+type+'"}';
+                url = GetPostUrl.gUrl() +"MobileService.asmx/GetOthers?jsonStr="+jsonStr;
+              //  console.log('111111111=='+url);
+                $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {   
+                  data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                //  console.log('3333333333=='+data);
+                   if (data.Error.ErrorCode=='0') {
+                       jingdu=data.Result[0].jingdu;
+                       weidu=data.Result[0].weidu;
+                       openmap(jingdu,weidu);
+       //添加标注物
+                    }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }                  
+                    
+                  },
+                    error : function(xhr, type) {
+                        alert('没网了请连接网络!')
+                    }
+                })
+     }
+           
+           function openmap(jd,wd){
+               uexBaiduMap.open(0,titHeight,content1,content2,jd,weidu);//打开地图
+                uexWidgetOne.cbError = function(opid, type, data) {
+                
+               }
+               bzw(jd,wd);
+            }
+            
+            function bzw(jd,wd){
+                                     var data = [
+                                                 {
+                                                  id:"1",
+                                                  longitude:jd,
+                                                  latitude:wd,
+                                                  icon:"http://www.iconpng.com/png/plex-for-android/local.png",
+                                                  bubble:{
+                                                  title:"信泰线缆有限公司"
+                                                         }
+                                                  }];
+                                 var dataStr = JSON.stringify(data);
+                                 uexBaiduMap.addMarkersOverlay(dataStr);
+       
+                          setCenter(jd,wd);
+                          
+            }  
+       function setCenter(jd,wd) {
+            uexBaiduMap.setCenter(jd, wd);
+            //设置中心点
+          
+        }
+        
+        
+       function jclx(){
+         alert(uexBaiduMap.getCurrentLocation());  
+         uexBaiduMap.getCurrentLocation();
+            var data = {
+            id: "2",
+            type: "0",
+            start: {
+                 city: "北京",
+                 name: "天安门"
+               },
+                end:{
+                   city: "邢台市",
+                   name: "侯口乡",
+                   longitude: jingdu,
+                   latitude: weidu
+                    }
+               };
+            var jsonStr=JSON.stringify(data);
+            uexBaiduMap.searchRoutePlan(jsonStr);
+        }
+
+</script>
+</html>

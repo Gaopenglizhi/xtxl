@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp  ontouchstart  ">
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0" style="height: 100%;width: 100%;">
+      
+            <div id="content"  class="ub-f1 tx-l" style="height: 100%;width: 100%;">
+                <div id="slider"   class="slider" style="height: 100%;width: 100%;">
+                <img style="height: 100%;width: 100%;" src="css/images/wel720.jpg" /> 
+
+                </div>
+            </div>
+            <!--content结束-->
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.slider.js"></script>
+    </body>
+    <script>
+        
+        appcan.ready(function() {
+           
+              
+                getData();
+                 
+                  
+                  
+                
+        });
+             
+ 
+       function getData() {
+            
+              var id=  appcan.locStorage.getVal('userId');
+                var Uname= appcan.locStorage.getVal('userName');
+                  var code= appcan.locStorage.getVal('checkcode');
+           
+            if(id==null){
+                setTimeout(tz,2000);
+              return;
+             }
+             else
+             {
+                 
+             
+              appcan.window.openToast('正在下载数据','1600',5,0);
+              var  jsonStr='{\"UserName\":\"'+Uname+'\",\"CheckCode\":\"'+code+'\",\"uid\":\"'+id+'\"}';
+       
+          
+             $.ajax({     url: GetPostUrl.gUrl() +'MobileService.asmx/GetIndexCPLB?jsonStr='+jsonStr,
+                type: 'GET',
+                data: {},
+                dataType:'text',
+            
+                success: function(data) {
+                   
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                    var str = '';
+                    
+                    if (data.Error.ErrorCode == '0') {
+                        str=data.Result[0].html.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+                        appcan.locStorage.setVal('str',str);
+                          appcan.locStorage.setVal('indexBag',"1");
+                          
+                    }
+                },
+                error: function(xhr, status, errMessage) {
+                   return;
+                }
+                
+            });
+         setTimeout(tz,800);
+        }
+        }
+        
+         function tz() {
+             
+             appcan.locStorage.setVal("ym","0");
+             if(appcan.locStorage.getVal('userId')==null){
+                
+                appcan.window.open({
+                    name : 'login',
+                    data : 'login.html',
+
+                    })
+                 }else{
+                     var ram=Math.random();
+                      appcan.locStorage.setVal("ram",ram);
+                    appcan.window.open({
+                    name : 'index'+ram,
+                    data : 'index.html',
+
+                    }) 
+                 }
+              }
+        
+    </script>
+</html>

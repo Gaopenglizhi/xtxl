@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+       <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="../css/ui-box.css"> 
+         <script type="text/javascript" src="../js/ty.js"></script>
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
+        <link rel="stylesheet" href="../personal_content/css/main.css">
+        <link rel="stylesheet" href="../css/yangyan.css">
+</head>
+<body>
+ 
+    <script src="../js/appcan.js"></script>
+    <script src="../js/appcan.control.js"></script>
+    <script src="../js/md5.js"></script>
+</body>
+    
+    <script type="text/javascript">
+    
+   appcan.ready(function() { 
+    appcan.window.openToast( "正在加载,请稍后...", '10000', 5, 0);
+    var mo= appcan.locStorage.getVal('orderMoney');
+                 var jsonStr="{\"order\":\""+mo+"\"}";
+                 var url=GetPostUrl.gUrl() +"MobileService.asmx/GetAppPayWx?jsonStr="+jsonStr;
+               console.log("111"+url);
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        dataType: "text",
+                        success: function (data) {
+                           // appcan.window.openToast( data, '5000', 5, 0);
+                              data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                              if (data.Error.ErrorCode=='0') { 
+                                                         
+                                  startPay(data.Result[0]);
+                              
+                                  appcan.window.closeToast();
+                                  }
+                            else
+                                {
+                                 alert("支付错误");
+                                  appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "../orderlist.html",
+                         });
+                             }
+                          },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                             alert("网络错误");
+                             appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "../orderlist.html",
+                         });
+                        }
+                    });
+                    
+           uexWeiXin.cbStartPay = function(data){
+             var json = JSON.parse(data);
+            if (json.errCode == '0') {
+                  alert("支付成功！");
+                                               appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "../orderlist.html",
+                         });
+               
+            } if(json.errCode == '-2'){
+                 alert("订单取消");
+                        appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "../orderlist.html",
+                         });
+            }else {
+              
+                         appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "../orderlist.html",
+                         });
+            }
+           // window.localStorage["yemian"]="sub1";
+              appcan.locStorage.setVal('yemian', 'sub1');
+      }
+          
+   })
+   
+ 
+   //调起微信的函数
+   //key:dfewfwefefefff3rf23r32f23e2323d2
+    function startPay(data) {
+       
+    var AA="appid="+data.appId+"&noncestr="+data.noncestr+"&package=Sign=WXPay&partnerid="+data.partnerid+"&prepayid="+data.prepayid+"&timestamp="+data.timestamp+"";
+    var stringSignTemp=AA+"&key="+Weixin.wxkey() ;
+     //alert(stringSignTemp);
+    var sign1=md5(stringSignTemp).toUpperCase();    
+   try{
+       var params = {
+            appid:data.appId,//(必选) 微信分配的AppID
+            partnerid:data.partnerid,//(必选) 微信支付分配的商户号
+            prepayid:data.prepayid,//(必选)
+            package :"Sign=WXPay", //(必选)暂填写固定值Sign=WXPay
+            noncestr:data.noncestr,//(必选)
+            timestamp:data.timestamp,//(必选)
+            sign:sign1 //(必选)
+    };
+        uexWeiXin.isSupportPay();
+        uexWeiXin.isWXAppInstalled();     
+        var json = JSON.stringify(params);      
+        uexWeiXin.startPay(json);
+    }catch(e){
+        alert(e);
+    } 
+
+
+}
+
+  
+
+
+  
+  function cbStartPay(info) {
+            var json = JSON.parse(info);
+            alert(json.errCode);
+            if (json.errCode == '0') {
+                alert("支付成功");
+            } else {
+                alert(json.errCode);
+            }
+        }
+        
+
+
+              //md5加密           
+       function md5(md5){
+          var Md5="";
+          Md5=hex_md5(md5); 
+          return Md5;    
+        }
+    
+   /* function startPay(){
+  alert(1);ALERT(prepayid);
+        var params = {
+            appid:"wx12642ce85db53abd",//(必选) 微信分配的AppID
+            partnerid:"1333072601",//(必选) 微信支付分配的商户号
+            prepayid:prepayid,//(必选)
+            package:"Sign=WXPay",//(必选)
+            noncestr:"139042a4157a773f209847829d80894d",//(必选)
+            timestamp:"1412000000",//(必选)
+            sign:sig//(必选)
+        };
+        var data = JSON.stringify(params);
+        uexWeiXin.startPay(data);
+    }*/
+         
+    </script>
+</html>

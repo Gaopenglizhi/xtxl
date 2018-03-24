@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="personal_content/css/main.css">
+        <link rel="stylesheet" href="css/yangyan.css">
+            <style>
+      .main{
+           padding:0 2em 0 2em ;
+      }
+        .my{  
+            width:100%; 
+        }
+         .myline{
+            float: left; 
+           width: 100%; 
+            }
+             .myline2{
+            float: left; 
+           width: 37.39%; 
+            }
+             .myline3{
+            float: left; 
+           width: 37.48%; 
+            }
+               .myline4{
+            float: left; 
+           width: 25.1%; 
+            }
+        </style>
+   
+    </head>
+    <body class="um-vp bc-bg " style="background-color: #f7f7f7" ontouchstart>
+
+        <!--下面功能-->
+        <div class="ub ub-ver ub-f1" ><br/><br/><br/><br/>
+               <div class="main">
+           <div class="my"> 
+            <img class="myline" src="css/images/gywm_01.png" onclick="url(1)" /> 
+              </div>
+             <div class="my"> 
+            <img class="myline2" src="css/images/gywm_04.png" onclick="url(4)" /> 
+                <img src="css/images/gywm_05.png" class="myline4" onclick="url(5)"/> 
+                 <img src="css/images/gywm_02.png" class="myline3" onclick="url(2)"/>      
+                    
+                </div>
+                
+                 <div class="my">
+             <img src="css/images/gywm_03.png" class="myline" onclick="url(3)"/> 
+                </div></div>
+                <br/>
+               
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/appcan.listview.js"></script>
+    <script src="js/yangyan.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+
+                       
+        })
+        /*
+    var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : true,
+            hasAngle : false,
+            hasSubTitle : false,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "荣誉资质",
+            icon : "css/images/ryzz.png",
+            subTitle : "12:05",
+            id : "1"
+        }, {
+            title : "产品展示",
+            icon : "css/images/cpzs.png",
+            subTitle : "12:05",
+            id : "2"
+        }, {
+            title : "关于我们",
+            icon : "css/images/gywm.png",
+            subTitle : "12:05",
+            id : "3"
+        },{
+            title : "公司地址",
+            icon : "css/images/dz.png",
+            subTitle : "12:05",
+            id : "3"
+        }])*/
+        
+        function url (type ) {
+          switch(type)
+{
+case 1:
+   appcan.window.open({
+                                            name : 'gywm',
+                                            data : 'gywm.html',
+                                            aniId : '10'
+                                        })
+  break;
+case 2:
+  appcan.window.open({
+                                            name : 'cpzs',
+                                            data : 'cpzs.html',
+                                            aniId : '10'
+                                        })
+  break;
+ case 3: 
+    appcan.window.open({
+                                           name : 'ryzz',
+                                           data : 'ryzz.html',
+                                           aniId : '10'
+                                       })
+  break;
+   case 4: 
+     appcan.window.open({
+                                            name : 'dtweixin',
+                                            data : 'dtweixin_content.html',
+                                            aniId : '10'
+                                        })
+  break;
+ 
+  
+}
+        }
+        
+       
+
+        
+
+    </script>
+</html>

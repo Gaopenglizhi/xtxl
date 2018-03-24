@@ -1,0 +1,31 @@
+.bc-text-yb {
+    color: #D2D2D2;
+}
+.yb-btn {
+    min-height: 2em;
+    min-width: 3em;
+    display: -webkit-box !important;
+    display: box !important;
+    position: relative;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-box-pack: center;
+    box-pack: center;
+}
+.ub-yb {
+    display: -webkit-box !important;
+    display: box !important;
+    position: relative;
+}
+.fa-street-view:before {
+  content: "\f21d";
+}
+.bc-head-yb{
+    background-color: green;
+}
+.bc-footer-yb{
+    background-color: green;
+}
+.fa-yb {
+    font-size: 1.5em
+}

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+         <link rel="stylesheet" href="css/ui-box.css"> 
+         <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/jiawen.css">
+       
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <script src="js/appcan.js">      </script>
+        <script src="js/appcan.control.js">   </script>
+        <!-- jQuery Include -->
+        <script type="text/javascript" src="list/js/jquery-1.11.1.min.js">
+        </script>
+        <!-- Mobiscroll JS and CSS Includes -->
+        <link href="list/css/mobiscroll.custom-2.17.0.min.css" rel="stylesheet"
+        type="text/css" />
+        <script src="list/js/mobiscroll.custom-2.17.0.min.js" type="text/javascript">
+        </script>
+        <style type="text/css">
+            /* Demo Page styling, you can ignore this in your implementation */ body
+            { padding: 0; margin: 0; font-size: 16px; font-family: arial, verdana,
+            sans-serif; } input, select { width: 100%; padding: .625em; margin: 0 0
+            .625em 0; border: 1px solid #aaa; box-sizing: border-box; -moz-box-sizing:
+            border-box; -webkit-box-sizing: border-box; } .header { padding: .625em;
+            background: #5185a8;} .header h1 { margin: 0; padding: 0; color: #fff;
+            text-align: center; font-size: 1.25em; font-weight: bold; text-shadow:
+            1px 1px 1px #000; text-overflow: ellipsis; overflow: hidden; white-space:
+            nowrap; } .content {   } /* Listview demo
+            styling */ .mbsc-lv-cont { margin: 1em -1em; } .size{ font-size:.9em; }
+            .txtcolor{ color:#6f6f6f; } .txtcolor1{ color:#d10000; } .txtcolor2{ color:#6ec00e;
+            } .c-gra1{ background-color:#f6f6f6; } .div_bxdd{ border:1px solid #e3e4e8;
+            padding:10px; background: #fff; margin: 5px 0 5px 0; border-radius: 10px
+            0px 10px 0px;} .div_ddxh{ background:#f6f6fa; border:1px dashed #d9dde3;
+            border-radius:6px; padding:0px 20px; font-size:0.8em; color:#333; font-weight:bold;
+            line-height:210%;} .div_ddxh span{ float:right;} .div_ddxh img{ border:0px;
+            margin:0px 8px;align-items: center;} .div_cpgg{ margin:0px 20px; font-size:0.9em;
+            color:#000; line-height:200%;} .div_ddmoney{ color:#38a2c5; font-size:0.9em;
+            line-height:220%; margin:0px 20px;} .div_ddmoney span{ font-size:1.2em;
+            font-weight:bold;} .div_hr{ height:1px; background:#f1f1f3; border:0px;}
+            .cp_minput{ border:1px solid #c1ced7; border-radius:4px; width:60px; height:20px;}
+       .bg{background: #fafafa;}
+        </style>
+    </head>
+    <body class="um-vp bc-bg  " ontouchstart>
+        <span id="jiepanxia">
+        </span>
+        <div class="content">
+            <div data-role="fieldcontain" style=" background-color: #f7f7f7" class="demo-cont"
+            id="demo_cont_treelist">
+                <label for="demo_treelist_dummy">
+                </label>
+                <ul id="demo_treelist" class="level-0">
+                </ul>
+            </div>
+          <!--<div>
+                <div class="btn ub ub-ac bc-text-head ub-pc sc-btn mg" id="sub" onclick="javascript:add();">
+                    <span style="font-size:  0.8125em ;   ">
+                        加入备选
+                    </span>
+                </div>-->
+            </div>
+            <div id="addPhotoLabel">
+            </div>
+            <div style="display: none ">
+                <select name="demo" id="demo" class="settings">
+                    <option value="treelist">
+                        Treelist
+                    </option>
+                </select>
+            </div>
+            <!-- Demo configurator markup END -->
+            <!-- ------------------------------------------------------------------
+            -->
+            <!-- Select demo markup -->
+            <div  >
+                <div class="btn ub ub-ac bc-text-head ub-pc sc-sub duan mg1 " id="sub1"  onclick="javascript:sendData();">
+                    <span id="sc" style="font-size:  0.8125em ;   ">
+            生成订单            
+                    </span>
+                </div>    <div class="btn ub ub-ac bc-text-head ub-pc sc-sub1 duan" id="sub2" onclick="javascript:sendbj();">
+                    <span style="font-size:  0.8125em ;   ">
+                        常见报价
+                    </span>
+                </div>
+                <span class="hjtotal" id="totalHJ">
+                </span>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        function TotalHj() {
+            var thj = 0;
+            $("span[xj='xj']").each(function() {
+                if ($(this).text() != "") {
+                    thj += parseFloat($(this).text());
+
+                }
+            });
+            $("#totalHJ").html("<span class=\"div_ddmoney\">合计:￥" + thj.toFixed(1)+"</span>");
+        }
+
+        var a = 0;
+        function add() {
+ //alert(1);
+ 
+            var xilie;
+            var dianya;
+            var jiegou;
+            var xinghao;
+            var guige;
+            var jiage;
+            var jpx = document.getElementById("demo_treelist_dummy").value;
+            if (jpx != '') {
+                var array = jpx.split(" ");
+                if ((!isNaN(array[0]))) {
+
+                    ///////////////////////////////////////////
+                    /*
+                var o = "  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                      " + 
+                               + "               </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                        " + 
+                              + "                   </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                          " + 
+                            + "                    </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                        " + 
+                              "" + + "</span>  "
+                              +"              </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                        " + 
+                              "                 </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub\">                         " + 
+                              "                  </div>                  <div class=\"umw1\">                    </div>                  <div class=\"ub-f1 ub-con ub-ac ub-pc ub txtcolor2\">                       " + 
+                              "               </div>                  <div class=\"umw1\">                     </div>                     <div class=\"ub-f1 ub-con ub-ac ub-pc ub txtcolor1\">                                                         " + 
+                              "                 </div>                ";*/
+
+                    var o = "<div id=\"divo"+a+"\" class=\"div_bxdd\"><div    class=\"div_ddxh\">" + "<img   onclick=\"divyc(" + a + ",0)\" src=\"css/images/h_jt_left.png\"><span onclick=\"divyc(" + a + ",0)\" style=\"float:left\">  " + showNameV3(array[0], array[1], array[2]) + " " + showNameV4(array[0], array[1], array[2], array[3]) + "</span><span class=\" yjll \"  onclick=\"deleteDiv(" + a + ")\" >删除</span>  " + "</div><span name=id id=\"id" + a + "\" style=display:none>" + showNameV61(array[0], array[1], array[2], array[3], array[4], array[5]) + "</span>  " + "<div class=\"div_cpgg\">" + "电压：" + showNameV2(array[0], array[1]) + " <span style=\"float:right;\" id=\"dj" + a + "\">" + showNameV6(array[0], array[1], array[2], array[3], array[4], array[5]) + "</span>" + " </div>" + "<div class=\"div_cpgg\">规格：" + showNameV5(array[0], array[1], array[2], array[3], array[4]) + "</div>" + " <div class=\"div_cpgg\">米数：<input type='text'   id=\"ip" + a + "\" onkeyup=\"xiaoji(" + a + ")\" onfocus=\"xiaoji(" + a + ")\"  onchange=\"if(/\\D/.test(this.value)){alert('请输入数字！');this.value='';}\"    class=\"cp_minput\"/>   </div>" + "<div class=\"div_cpgg\">库存：<span class=\" yjll \"  onclick=\"ckkc(" + (showNameV41(array[0], array[1], array[2], array[3])) + ")\" >查询</span></div>  <hr class=\"div_hr\">" + "<div class=\"div_ddmoney\">小计： <span xj='xj' id=\"xj" + a + "\" >0.0</span></div>" + "</div>"
+                     o += "<div style=\"display:none\" id=\"divc"+a+"\"   class=\"div_bxdd\"><div onclick=\"divyc(" + a + ",1)\" class=\"div_ddxh\">" + "<img src=\"css/images/h_jt_bottom.png\"><span style=\"float:left\">" + showNameV3(array[0], array[1], array[2]) + " " + showNameV4(array[0], array[1], array[2], array[3]) + " "+showNameV2(array[0], array[1])+showNameV5(array[0], array[1], array[2], array[3], array[4]) + "</span> <span  id=\"xjj" + a + "\" >0.00</span>  " + "</div> </div>  "  
+                      
+                    var div = document.createElement("div");
+                    div.id = div.name = "d" + a;
+                    // div.className = "ub ub-hor ub-f1 ulev-1 uinn ub-ac bc-border ubt ubb c-gra1 umh4";
+                    div.innerHTML = o;
+
+                    document.getElementById("addPhotoLabel").appendChild(div);
+                    //document.write(document.getElementById("addPhotoLabel").innerHTML);
+                            /*
+                             $("span[name='id']").each(function() {
+                                           if(showNameV61(array[0], array[1], array[2], array[3], array[4], array[5])==$(this).text())
+                                            {
+                                                  appcan.window.openToast('宸叉湁璇ョ被鍒�', '2000', 5, 0);
+                                            }
+                                         }); */
+                            
+           
+                    
+                    a++;
+                }
+            } else {
+                appcan.window.openToast('请选择类别!', '2000', 5, 0);
+            }
+        }
+        //window.onload =  function(){add();}
+        function divyc (argument,type) {
+          if(type==0)
+          {
+              $("#divc"+argument).show();
+               $("#divo"+argument).hide();
+          }
+          else
+          {
+                $("#divo"+argument).show();
+               $("#divc"+argument).hide();
+          }
+        }
+        
+        function showNameV2(index1, index2) {
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + "").text().replace($("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul:first").text(), "");
+        }
+        function showNameV3(index1, index2, index3) {
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + "").text().replace($("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul:first").text(), "");
+        }
+        function showNameV4(index1, index2, index3, index4) {
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + "").text().replace($("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul:first").text(), "");
+        }
+        function showNameV5(index1, index2, index3, index4, index5) {
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul li#l5_" + index5 + "").text().replace($("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul li#l5_" + index5 + ">ul:first").text(), "");
+        }
+        function showNameV6(index1, index2, index3, index4, index5, index6) {
+            // alert($("#l1_"+index1+">ul li#l2_"+index2+">ul li#l3_"+index3+">ul li#l4_"+index4+">ul li#l5_"+index5+">ul li#l6_"+index6+"") .text());
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul li#l5_" + index5 + ">ul li#l6_" + index6 + "").text().replace($("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul li#l5_" + index5 + ">ul li#l6_" + index6 + ">ul:first").text(), "");
+        }
+        function showNameV61(index1, index2, index3, index4, index5, index6) {
+            // alert($("#l1_"+index1+">ul li#l2_"+index2+">ul li#l3_"+index3+">ul li#l4_"+index4+">ul li#l5_"+index5+">ul li#l6_"+index6+"").attr("value") );
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + ">ul li#l5_" + index5 + ">ul li#l6_" + index6 + "").attr("value");
+        }
+        function showNameV41(index1, index2, index3, index4) {
+            // alert($("#l1_"+index1+">ul li#l2_"+index2+">ul li#l3_"+index3+">ul li#l4_"+index4+">ul li#l5_"+index5+">ul li#l6_"+index6+"").attr("value") );
+            return $("#l1_" + index1 + ">ul li#l2_" + index2 + ">ul li#l3_" + index3 + ">ul li#l4_" + index4 + "").attr("value");
+        }
+        function showNameV1(index) {
+            return $("#l1_" + index + "").text();
+        }
+        function ckkc(xhid) {
+            appcan.locStorage.setVal('xhid', xhid);
+            appcan.window.open({
+                name: 'kcslt',
+                data: 'kcslt.html'
+            });
+
+        } function sendbj() {
+           
+            appcan.window.open({
+                name: 'cjbj1',
+                data: 'cjbj.html'
+            });
+
+        }
+        function showName(index, level) {
+            // document.getElementById();
+            //  $("li#"+level+"_" + index+"").Id;
+            //  $('li#3_0').text()
+            alert("#l" + level + "_" + index + "");
+            alert($("#l4_0").text());
+            return $("#l" + level + "_" + index + "").text().replace($("#l" + level + "_" + index + ">ul:first").text(), "");
+            //document.getElementById("l6_0").getAttribute("value")
+        }
+
+        function deleteDiv(line) {
+            if (window.confirm('你确定要删除吗？')) {
+                var oDiv = document.getElementById("d" + line);
+                document.getElementById("addPhotoLabel").removeChild(oDiv);
+                TotalHj();
+                return true;
+            }
+
+        }
+        function xiaoji(line) {
+            var xj = 0.0;
+            var dj = document.getElementById("dj" + line).innerHTML.replace("￥", "");
+            var ms = document.getElementById("ip" + line).value;
+
+            if ((checkIsDouble(dj)) && (checkIsDouble(ms))) {
+                xj = parseFloat(dj) * parseFloat(ms);
+            }
+            document.getElementById("xj" + line).innerHTML = xj.toFixed(1);
+             document.getElementById("xjj" + line).innerHTML = xj.toFixed(1);
+            //document.getElementById("addPhotoLabel").removeChild(oDiv); 
+            TotalHj();
+        }
+        //判断是否为DOUBLE的类型
+        function checkIsDouble(checkString) {
+
+            var reg = /^[-\+]?\d+(\.\d+)?$/;
+
+            if (reg.test(checkString)) {
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        }
+
+        function getData() {
+             var id=  appcan.locStorage.getVal('userId');
+                var Uname= appcan.locStorage.getVal('userName');
+                  var code= appcan.locStorage.getVal('checkcode');
+           
+            if(id==null){
+                 alert('请先登录');
+                 appcan.window.open("login","login.html");
+                 appcan.locStorage.setVal('yemian', 'sub');
+             }
+              appcan.window.openToast("数据加载中，请稍后...", '20000', 5, 0);
+            if(appcan.locStorage.getVal('str')==null)
+            {
+                
+              var  jsonStr='{\"UserName\":\"'+Uname+'\",\"CheckCode\":\"'+code+'\",\"uid\":\"'+id+'\"}';
+     
+          
+             $.ajax({     url: GetPostUrl.gUrl() +'MobileService.asmx/GetIndexCPLB?jsonStr='+jsonStr,
+                type: 'GET',
+                data: {},
+                dataType:'text',
+            
+                success: function(data) {
+                    $('#demo_treelist').html('');
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                    var str = '';
+                    if (data.Error.ErrorCode == '0') {
+                        str=data.Result[0].html.replace(/&lt;/g,"<").replace(/&gt;/g,">");
+                        // console.log(str);
+                          $('#demo_treelist').append(str);
+                       //  $("#sc").text("生成数据中");
+                            init();
+                            $("#demo_treelist_dummy").hide();
+                         // $("#sc").text("生成订单");
+                       
+                  
+                    }
+                },
+                error: function(xhr, status, errMessage) {
+                    console.info(errMessage);
+                    //appcan.window.openToast('连接网络失败!', '2000', 5, 0);
+                }
+            });
+
+        }
+       
+        else
+        {
+              $('#demo_treelist').html('');
+                //  data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                    var str = '';
+                   // if (data.Error.ErrorCode == '0') {
+                        str= appcan.locStorage.getVal('str');
+                        
+                        // console.log(str);
+                          $('#demo_treelist').append(str);
+                       //  $("#sc").text("生成数据中");
+                            init();
+                            $("#demo_treelist_dummy").hide();
+                         // $("#sc").text("生成订单");
+                         
+        }
+           appcan.window.closeToast();
+       }
+        function sendData() {
+            var a = "0";
+            var nn=0;
+            $("input[type='text']").each(function() {
+                if ($(this).val() == "") {
+                    a = "1";
+
+                }      
+                nn++;
+            });
+      
+            if(nn==1)
+            {
+                     appcan.window.openToast("请先加入备选在生成订单！", '2000', '5', 0);  
+            }
+            else{
+            if (a == "1") {
+                appcan.window.openToast("米数不能为空！", '2000', '5', 0);
+            } else {
+                var id;
+                var mishu;
+                var jso = "";
+                var values;
+                $("span[name='id']").each(function() {
+                    id = ($(this).attr("id")).replace("id", "");
+                    values = $(this).text();
+                    mishu = $("#ip" + id).val();
+
+                    jso += "{\"id\": \"" + values + "\",\"ms\": \"" + mishu + "\"},";
+
+                    /*   id= $(this);
+                   
+                      ;
+                                      
+                                      
+                    }*/
+                });
+                jso = jso.substr(0, jso.length - 1);
+
+                var jmain = "  \"list\": [          " + jso + "    ] }";
+                // alert(jmain);
+                appcan.locStorage.setVal('index_js', jmain);
+                appcan.window.open({
+                    name: 'sub'+Math.random(),
+                    data: 'sub.html',
+                })
+
+            }}
+        }
+
+        appcan.ready(function() {
+
+
+            getData();
+            
+
+        });
+
+        //获取美食列表
+        function getFoodList() {
+           $.ajax({dataType:'text',
+                url: 'http://testmas.appcan.cn:9000/ODBC/shopList?pageNum=1&count=5&typeId=00',
+                type: 'GET',
+                data: {},
+                offline: true,
+                offlineDataPath: 'wgt://aaa/',
+                success: function(data) {
+                    alert(data);
+
+                }
+            });
+        }
+        var jpx;
+        function init() {
+
+              // getData();
+            // Treelist demo initialization
+            $('#demo_treelist').mobiscroll().treelist({
+                mode: 'Scroller',
+                rows: '3',
+                //  theme: '',
+                onShow: function(html, valueText, inst) {
+                    $("#demo_treelist_dummy").val(valueText);
+                },
+                onChange: function (valueText, inst) {
+                 bx () ;
+                },
+                
+                showLabel: true,
+                labels: ['系列', '电压', '结构', '型号', '规格', '价格'],
+                display: 'inline',
+                mode: 'scroller',
+                // placeholder: '选择车型', 
+                // Specify display mode like: display: 'bottom' or omit setting to use default 
+                lang: 'zh' // More info about labels: http://docs.mobiscroll.com/2-17-0/list#!opt-labels
+            });
+            
+            
+            
+            $(".dw-ltr").css({"width":"100%"})
+            $(".dwwr").css({"width":"100%"})
+            $(".mbsc-w-p").css({"width":"33%"})
+            
+             bx () ;
+        }
+        function bx () { 
+           var a=" <br/> <span id=\"sub\" class=\"sc-sub yjl \"  style=\"font-size:  0.8125em ;   \">加入备选</span> ";
+           //var reg= new RegExp(a,"");
+            $(".dw-i").each(function() {
+                if($(this).text() .indexOf('￥')>-1)
+                 { 
+                     if($("#sub").length==0)
+                     {
+                         $(this) .append(a); 
+                         $('#demo_treelist').mobiscroll('tap', $('#sub'), function () { add(); });
+                     }
+                  }
+             });
+             
+             
+        }
+    </script>
+
+</html>

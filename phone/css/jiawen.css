@@ -1,0 +1,343 @@
+.uinn-1 {
+    padding: .9275em 0 0 0;
+}
+.icon-1 {
+    height: 3.125em;
+    width: 3.125em;
+}
+.icon-2 {
+    height: 1.375em;
+    width: 1.375em;
+}
+
+.marginr-1 {
+    margin-right: 1.875em;
+}
+.uc-a-1 {
+    -webkit-border-radius: 1.5em;
+    border-radius: 1.5em
+}
+.tuijian {
+    height: 1.6875em;
+    width: 1.6875em;
+    background-image: url('images/food-tuijian.png');
+}
+.zhuanti {
+    height: 1.0625em;
+    width: 1.6875em;
+    background-image: url('images/food-zhuanti.png');
+}
+.local {
+    height: 1.6875em;
+    width: 1.28125em;
+    background-image: url('images/food-local.png');
+}
+.more {
+    height: .4375em;
+    width: 1.71875em;
+    background-image: url('images/food-more.png');
+}
+.food-head {
+    background-image: url('images/food-head.png');
+}
+.umar-t1 {
+    margin-top: .625em;
+}
+.umar-b1 {
+    margin-bottom: .875em;
+}
+.umar-b2 {
+    margin-bottom: 2em;
+}
+.bor-t {
+    border-top: 1px solid #fbfcfd;
+}
+.margin-1 {
+    margin: .9375em .625em;
+}
+.margin-4 {
+    margin: .9375em 0em;
+}
+.margin-5 {
+    margin: .9375em .625em;
+}
+.bor-b {
+    border-bottom: 1px solid #c6c6c6;
+}
+.marlr {
+    margin: 0 .625em;
+}
+.font-1 {
+    font-size: 1.0625em;
+    color: #333333;
+}
+.font-2 {
+    font-size: .875em;
+    color: #5e5d5d;
+}
+.font-4 {
+    color: #333333;
+    font-size: .9375em;
+}
+.clamp2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.clamp4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.umar-l-1 {
+    margin-left: 6.875em;
+}
+.clamp1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.margint-1 {
+    margin-top: .71875em
+}
+.font-3 {
+    color: #999999;
+    font-size: .6875em;
+}
+.bg-color1 {
+    background: #eaeff3;
+}
+.bg-color2 {
+    background: #eaeff3;
+}
+.mar-all {
+    margin: .625em;
+}
+.hw1 {
+    height: 2.8125em;
+    width: 18.75em;
+    background: #ffffff;
+    border: 1px solid #d2d2d2;
+}
+.hw3 {
+    background: #ffffff;
+    border: 1px solid #d2d2d2;
+}
+.morefenlei {
+    height: .6875em;
+    width: .6875em;
+    background-image: url('images/morefenlei.png');
+}
+.umar-t2 {
+    margin-top: .3125em;
+}
+.umar-t3 {
+    margin-top: .9375em;
+}
+.umar-lr {
+    margin-left: .45em;
+    margin-right: .45em;
+}
+.bor-color1 {
+    border-top: 2px solid #e3e5e6;
+}
+.hengxian {
+    width: 14.65em;
+    background-image: url('images/hengxian.png');
+}
+.xiaozhuanti {
+    height: 0.625em;
+    width: .75em;
+    background-image: url('images/food-zhuanti.png');
+}
+.hw2 {
+    height: 2.5em;
+    /*width: 5.9372em;*/
+    background: #ffffff;
+    border: 1px solid #d7d8d9;
+}
+.mar-lr2 {
+    margin: 0em .46875em;
+}
+.font-5 {
+    font-size: .875em;
+    color: #6c6c6c;
+}
+.wh3 {
+    height: 2.1875em;
+    width: 100%;
+}
+.pos {
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.3);
+    position: relative;
+    margin-top: -2.1875em;
+}
+.font-6 {
+    font-size: 1.0625em;
+    color: #ffffff;
+}
+.margin-2 {
+    margin: .875em .625em 0 .625em;
+}
+.font-7 {
+    font-size: .9375em;
+    color: #616161;
+}
+.shuxian {
+    background-image: url('images/shuxian.png');
+}
+.marr-1 {
+    margin-right: 1em;
+}
+.weizhi {
+    width: 1.28125em;
+    height: 1.65625em;
+    background-image: url('images/weizhi.png');
+}
+.tel {
+    background-image: url('images/telephone.png');
+}
+.telwh {
+    width: 1.375em;
+    height: 1.375em;
+}
+.shuxianwh {
+    width: 3px;
+    height: 3.125em;
+}
+.bor-b1 {
+    border-top: 5px solid #eaeff3;
+}
+.xiaoshuxian {
+    background-image: url('images/xiaoshuxian.png');
+}
+.xiaoshuxianwh {
+    width: 3px;
+    height: 2.1875em;
+}
+.xiaoshuxianwh1 {
+    width: 3px;
+    height: 1.5625em;
+}
+.margin-3 {
+    margin: 0em .625em;
+}
+.pad-1 {
+    padding: .468em 0em;
+}
+.bor-b2 {
+    border-top: .375em solid #eaeff3;
+}
+.font-8 {
+    font-size: .9375em;
+    color: #b8b8b8;
+}
+.font-9 {
+    font-size: .875em;
+    color: #91a909;
+}
+.font-10 {
+    font-size: .9375em;
+    color: #91a909;
+}
+.bor-b3 {
+    border-top: 2px solid #e7e7e7;
+}
+.zhankai {
+    background-image: url('images/zhankai.png');
+}
+.zhankaiwh {
+    width: .625em;
+    height: .375em;
+}
+.font-11 {
+    font-size: .875em;
+    color: #5ccdb5;
+}
+.font-12 {
+    color: #8d8d8d;
+    font-size: .75em;
+}
+.umart-1 {
+    margin-top: .875em;
+}
+.umart-2 {
+    margin-top: .5em;
+}
+.touxiangwh {
+    height: 1.875em;
+    width: 1.875em;
+}
+.bg-color3 {
+    background-color: #989898;
+}
+.foot-er {
+    background-color: #f1f1f1;
+}
+.foot-btn {
+    background-color: #91a909;
+}
+.foot-input {
+    background-color: #ffffff;
+}
+.t-cor1 {
+    color: #ffffff;
+}
+.food-sanjiao-select {
+    background-image: url('images/food-sanjiao-select.png');
+}
+.food-sanjiao-selectwh {
+    width: .625em;
+    height: .3125em;
+}
+.food-sanjiao {
+    background-image: url('images/food-sanjiao.png');
+}
+.food-sanjiaowh {
+    width: .625em;
+    height: .3125em;
+}
+.bor-b4 {
+    border: 1px solid #333333;
+}
+.bor-b5 {
+    border-bottom: 1px solid #333333;
+}
+.uin-1 {
+    padding: 1em .85em;
+}
+.mar-l-2 {
+    margin-left: .875em;
+}
+.bor-b7 {
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+.bor-b8 {
+    border-top: 1px solid #333333;
+}
+.mar-lr-4 {
+    margin: 0 .25em;
+}
+.starwh1{
+    width:1.3125em;
+    height:1.3125em;
+}
+.star1{
+    background-image: url('images/star1.png');
+}
+.star1-act{
+    background-image: url('images/star1-act.png');
+}
+.my-fa-x{
+font-size: 1.25em;
+}
+

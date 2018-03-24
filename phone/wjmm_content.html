@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="register_content/css/main.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver uinn-a1">
+           
+                  <div class="uba b-gra3 uc-a1 c-wh ub uinn-a7 ub-ac">  
+                <div class="ulev-app1 umw4">
+                     手机号
+                </div>
+             
+                <div class="ub ub-ac umh5 ub-f1">
+                    <div class="uinput ub ub-f1">
+                        <input placeholder="请输入手机号码" type="text" class="ub-f1" id="mobile">
+                    </div>
+                </div>
+            </div>
+<!--
+              <div class="uba b-gra3 uc-a1 c-wh ub uinn-a7 ub-ac umar-at1">
+                <div class="ulev-app1 umw4">
+                    楠岃瘉鐮�
+                </div>
+                <div class="ub ub-ac umh5 ub-f1">
+                    <div class="uinput ub ub-f1">
+                        <input  placeholder="璇疯緭鍏ラ獙璇佺爜"  class="ub-f1" id="yzm" >
+                        
+                    </div>
+            <div  id="btnSendCode" class="btn1 ub ub-ac bc-text-head  bc-btn  uc-a">
+                     鑾峰彇楠岃瘉鐮� 
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="ub ub-ver">
+                <div class="uinn-at1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="register">
+                        确定
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/yangyan.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.initBounce();
+        })
+        appcan.button("#register", "ani-act", function() {
+            var mobile = $("#mobile").val();
+          if(!isDefine(mobile)){
+                appcan.window.openToast("请输入手机号码", 3000, 5, 0)
+                return;
+          } else if (yzsj(mobile)==false) {
+                appcan.window.openToast("手机号错误", 3000, 5, 0)
+                return;
+            }else {
+                  var u=GetPostUrl.gUrl() +'MobileService.asmx/SendSMS?jsonStr={\"mobile\":\"'+mobile+'\"}';
+            
+              $.ajax({
+                  dataType:'text',
+                url :u,
+                type : 'GET',                           
+                data : {
+
+                },
+                                           
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+
+                       
+                       
+                       
+                        appcan.window.openToast("验证码已发送",'2000',5,0);
+                         appcan.locStorage.setVal('userName',mobile); 
+                            appcan.locStorage.setVal('wti','1'); 
+                             appcan.window.open({
+                                name : 'zhmm',
+                                data : 'zhmm.html'
+                            });
+                       
+                         
+                        
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('网络出错了!','2000',5,0);
+                }
+            });
+
+    }     
+              
+        })
+       
+
+          
+           var InterValObj; //timer变量，控制时间
+            var count = 60; //间隔函数，1秒执行
+            var curCount;//当前剩余秒数
+            
+            
+         appcan.button("#btnSendCode", function() {
+             var mobile = $("#mobile").val();
+            if(!isDefine(mobile)){
+              appcan.window.openToast("请输入手机号码", 3000, 5, 0)
+              return;
+              }else if (yzsj(mobile)==false) {
+                appcan.window.openToast("手机号错误", 3000, 5, 0)
+                return;
+            }else{
+              sendMessage();
+               }
+       })
+             
+            
+            function sendMessage() {
+  　                        curCount = count;
+            $("#btnSendCode").attr("onclick","");//div清空事件
+            //设置button效果，开始计时
+            $("#btnSendCode").html("" + curCount + "秒");
+            InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+            　　        //向后台发送处理数据
+/*
+           $.ajax({
+     銆�              銆�ype: "POST", //鐢≒OST鏂瑰紡浼犺緭
+     銆��         dataType: "text", //鏁版嵁鏍煎紡:JSON
+     銆��   url: 'Login.ashx', //鐩爣鍦板潃
+    銆�� data: "dealType=" + dealType +"&uid=" + uid + "&code=" + code,
+    銆�� error: function (XMLHttpRequest, textStatus, errorThrown) { },
+     銆��success: function (msg){ }
+     });*/
+
+　
+}
+
+//timer处理函数
+function SetRemainTime() {
+            if (curCount == 0) {                
+                window.clearInterval(InterValObj);//停止计时器
+                $("#btnSendCode").attr("onclick","sendMessage()");//div添加事件
+                $("#btnSendCode").html("重新发送验证码");
+            }
+            else {
+                curCount--;
+                $("#btnSendCode").html("" + curCount + "秒");
+            }
+        }
+             
+         function yzsj(str) {
+         var re = /^1\d{10}$/
+         if (re.test(str)) {
+             return true;
+           } else {
+            return false;
+             }
+          }   
+    </script>
+</html>

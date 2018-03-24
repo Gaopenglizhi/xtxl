@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="register_content/css/main.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver uinn-a1">
+           
+    <div class="uba b-gra3 uc-a1 c-wh ub uinn-a7 ub-ac umar-at1">
+       <div class="ulev-app1 umw4">
+             验证码
+                </div>
+                <div class="ub ub-ac umh5 ub-f1">
+                    <div class="uinput ub ub-f1">
+                        <input placeholder="请输入验证码" type="text" class="ub-f1" id="yzm">
+                    </div>
+                </div>
+            </div>
+   <div class="uba b-gra3 uc-a1 c-wh ub uinn-a7 ub-ac umar-at1">
+                <div class="ulev-app1 umw4">
+                    新密码
+                </div>
+                <div class="ub ub-ac umh5 ub-f1">
+                    <div class="uinput ub ub-f1">
+                        <input placeholder="请输入新密码" type="password" class="ub-f1" id="pwd">
+                    </div>
+                </div>
+            </div>
+            <div class="ub ub-ver">
+                <div class="uinn-at1">
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="czm">
+                        确定
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/yangyan.js"></script>
+    <script src="js/md5.js"></script>
+    <script src="js/ty.js"></script>
+    
+    </body>
+    <script>
+    var mobile='';
+    var mbwt='';
+    var Unicode='';
+    var Unicode1='';
+         appcan.ready(function() {
+         
+             
+        })
+        appcan.button("#czm", "ani-act", function() {
+            var yzm = $("#yzm").val();
+            var pwd = $("#pwd").val();
+
+             if (!isDefine(yzm)) {
+                appcan.window.openToast("验证码不能为空哦！", 3000, 5, 0)
+            } else if (!isDefine(yzm)) {
+                appcan.window.openToast("新密码不能为空哦！", 3000, 5, 0)
+            } else {
+                checkcode=md5(pwd).toUpperCase();
+                mobile=appcan.getLocVal('userName');
+                Unicode= (yzm);
+
+                jsonStr='{"UserName":'+mobile+',"Pwd":"'+checkcode+'","DaAn":"1","Code":"'+Unicode+'"}';
+                url = GetPostUrl.gUrl() +"MobileService.asmx/FindPWD?jsonStr="+jsonStr;
+                console.log('111111111=='+url);
+              $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                        if (data.Error.ErrorCode=='0') {  
+                                  alert(data.Error.ErrorMessage);                                                                       
+                                   appcan.window.open({
+                                                   name:'login',
+                                                   data:'login.html'
+                                              })
+                            
+                        } else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else if(data.Error.ErrorCode == '1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                  },
+                    error : function(xhr, type) {
+                        alert('网络出错了!')
+                    }
+                })
+            }
+        })
+        function md5(md5){
+          var Md5="";
+          Md5=hex_md5(md5); 
+          return Md5;    
+        }  
+
+    </script>
+</html>

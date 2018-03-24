@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="personal_content/css/main.css">
+        <link rel="stylesheet" href="css/yangyan.css">
+    </head>
+    <body class="um-vp bc-bg"  style="background-color: #f7f7f7" ontouchstart>
+      <div class="ub ub-ver uinn-a3 ub-fv">
+        <div class="c-gra1 uinn-a1 ub yy_sc-bg yy_ulev-2 yy_h" style="margin-top: 1.5em">
+            <div class="ub-f1 ub  ub-ac ub-pc" id="login" >
+                <div class="pos_re ub">
+                <div class="yy_uwh-set3 uc-a-set3 ub-img setImg1" id='touxiang' style="margin-right: 13em" ></div>
+
+                </div>
+                <div class="umar-at1" id="sjyh" style="margin-bottom:2em;right:11.1em;">
+                                                                手机用户
+                </div>
+                <div class="umar-at1" id="djdl" style="right:11em">
+                                                                点击登录
+                </div>
+                <div class="umar-at1" id="userName" style="margin-top:2.5em;right:15em;">
+ 15030029716
+                </div>
+ 
+            </div>
+
+        </div>
+        <!--下面功能-->
+        <div class="ub ub-ver ub-f1  yy_ulev-1"  style="margin-top: 2em;width: 100%">
+            <div id="listview"  class=" bc-border yy_sc-bg"></div>
+            <div id="wdl"  class="yy_sc-bg " style="height: 3em;padding-top: 2em;font-size: 1.5em" align="center">
+                您还没有登录哦！
+            </div>
+        </div>
+</div>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/appcan.listview.js"></script>
+    <script src="js/yangyan.js"></script>
+    </body>
+    <script>
+        var islog = '';
+        var name
+        var uID = appcan.locStorage.getVal('userId');
+        var photo
+        var mbaasURL
+        appcan.ready(function() {
+              
+            sxym();  
+
+                       
+        })
+        
+        function sxym(){
+        if(!isDefine(uID)){
+                document.getElementById("sjyh").style.display="none";
+                document.getElementById("userName").style.display="none";
+              }else{
+                  //取登录状态
+            //mbaasURL = 'http://cloudservices.appcan.cn/11430401/public/1/files/'; //取图片文件地址
+            
+            //取用户信息
+                name = appcan.locStorage.getVal('userName');
+                //photo = appcan.locStorage.val('photo');
+               $('#userName').text(name);
+               document.getElementById("djdl").style.display="none";
+       
+           }
+        }
+        
+
+        appcan.button("#login", "ani-act", function() { 
+                if(!isDefine(uID)){    
+            appcan.window.open({
+                name : 'login',
+                data : 'login.html',
+                aniId : '10'
+            });
+            appcan.locStorage.setVal('yemian', 'personal');
+          }
+        });
+  if(!isDefine(uID)){
+
+}else {
+  
+    document.getElementById("wdl").style.display="none";
+    var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : true,
+            hasAngle : true,
+            hasSubTitle : false,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "我的订单",
+            icon : "css/images/gr_dd.png",
+            subTitle : "12:05",
+            id : "1"
+        }, {
+            title : "修改密码",
+            icon : "css/images/gr_password.png",
+            subTitle : "12:05",
+            id : "2"
+        }, {
+            title : "退出登录",
+            icon : "css/images/gr_tc.png",
+            subTitle : "12:05",
+            id : "3"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            islog = appcan.locStorage.getVal('islog');
+            if (islog == '1') {
+                if (obj.title == '我的订单') {
+                 
+                    appcan.window.open({
+                                           name : 'orderlist'+Math.random(),
+                                           data : 'orderlist.html',
+                                           aniId : '10'
+                                       })
+                   
+                   
+                    appcan.locStorage.setVal('name', name);
+                    appcan.locStorage.setVal('userID', uID);
+                    //appcan.locStorage.setVal('photo', photo);
+
+                } else if (obj.title == '修改密码') {
+                    
+                    appcan.window.open({
+                                            name : 'updatapwd',
+                                            data : 'updatapwd.html',
+                                            aniId : '10'
+                                        })
+                    
+                    appcan.locStorage.setVal('userID', uID);
+                }else if(obj.title == '退出登录'){
+            
+             if(window.confirm('您确定要退出吗？')){
+                  //清除缓存
+                  appcan.locStorage.remove();
+                     document.getElementById("sjyh").style.display="none";
+                     document.getElementById("userName").style.display="none";
+                     document.getElementById("listview").style.display="none";
+                     document.getElementById("djdl").style.display="";
+                     document.getElementById("wdl").style.display="";
+                     uID="";
+                     sxym();
+                            appcan.window.open("login","login.html");
+                 return true;
+               }
+                    
+                     
+                      //photo = '5590ee892636b6e31f560d1f';
+                      //login_data = mbaasURL + photo;
+                //$("#touxiang").css("background-image", "url('" + login_data + "') !important");
+                }
+            } else {
+                appcan.window.openToast('您未登录', '2000', '5', 0);
+            }
+            
+        })
+}
+        
+
+    </script>
+</html>

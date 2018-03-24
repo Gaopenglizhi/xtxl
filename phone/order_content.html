@@ -1,0 +1,408 @@
+ <!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title>
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/jiawen.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="order_content/css/main.css">
+    </head>
+    <style type="text/css">
+        .div_dd{background:#fff; padding:10px; margin-bottom:10px;} .div_ddbh{
+        color:#7a7979; font-size:0.9em; line-height:300%;} .div_ddbh span{ } .div_ddbh
+        font{ margin:0px 20px;} .div_ddbh font a:link{color:#7a7979; text-decoration:none;}
+        .div_ddbh font a:visited{color:#7a7979; text-decoration:none;} .div_ddbh
+        font a:hover{color:#7a7979; text-decoration:none;} .div_ddxx{ padding:10px;
+        border:1px solid #e3e4e8; margin-bottom: 10px; } .div_ddxx ul{ margin:0px
+        0px; padding:0px 0px;} .div_ddxx ul li{ list-style:none;} .div_ddxx li{font-size:0.9em;
+        color:#484848; line-height:280%; padding:0px 20px;} .div_ddxx li.bg01{
+        background:#f9f9f9;} .div_ddxx font{ color:#ff6600; margin:0px 20px;} .div_ddxx
+        font a:link{color:#ff6600; text-decoration:none;} .div_ddxx font a:visited{color:#ff6600;
+        text-decoration:none;} .div_ddxx font a:hover{color:#ff6600; text-decoration:none;}
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="div_dd">
+            <div class="div_ddbh">
+                订单编号：
+                <span id="bh">
+                    读取中...
+                </span>
+                
+                <span>
+                     
+                    <span style=" color:#ff6600; float:right;" id="zt">
+                        读取中
+                    </span>
+                </span>
+            </div>
+            <div class="div_ddxx">
+                <ul>
+                    <li class="bg01">
+                        订单金额：
+                        <span id="hj" class="t-red1 ufm1">
+                            ￥0元
+                        </span>
+                    </li>
+                    <li>
+                        发货时间：
+                        <span id="sj" class="t-red1 ufm1" >
+                            暂无
+                        </span>
+                    </li>
+                    <li class="bg01">
+                        下单时间：
+                        <span id="xdrq" class="t-red1 ufm1">
+                            读取中
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="div_ddxx">
+                <ul>
+                    <li>
+                        收货人
+                        <span id="shr" class="t-red1 ufm1">
+                        </span>
+                        
+                        
+                    </li>
+                    <li class="bg01">
+                        联系电话
+                        <span id="lxdh" class="t-red1 ufm1">
+                             
+                        </span>
+                    </li>
+                    <li>
+                        收货地址
+                        <span id="shdz" class="t-red1 ufm1">
+                             
+                        </span>
+                    </li>
+                    <li class="bg01">
+                        配送车辆
+                        <span id="pscl" class="t-red1 ufm1">
+                            暂无
+                        </span>
+                    </li>
+                    <li>
+                        司机电话
+                        <span id="sjdh" class="t-red1 ufm1">
+                            暂无
+                        </span>
+                    </li>
+                </ul>
+            </div>
+             <span id="money" style="display: none;">
+                        </span>
+                          <span id="bfb" style="display: none;">
+                        </span>
+          <div id="sp">
+
+   
+                    </div>
+            <div id="zf" class="uinn-at1 " style="display:none">
+                <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a "  id="zfcz">
+                    支付定金<span id="zfdj"></span>
+                </div>
+            </div>
+               <div id="Delete" class="uinn-at1 " onclick="Deletedata();" style="display:none">
+                <div class="btn ub ub-ac bc-text-head ub-pc bcc-btn uc-a " id="qxcz" >
+                    取消订单
+                </div>
+            </div>
+            订单发货或安排生产后，订金不再退回。定金=总金额*<span id="bfbi"></span>
+        </div>
+    </body>
+    <script src="js/appcan.js">
+    </script>
+    <script src="js/appcan.control.js">
+    </script>
+    <script>
+        var iszhankai = 'false';
+        var orderId;
+        var attachment;
+        var jsonImg = [];
+        var userId;
+        var isCollected;
+        var jsonStr = "";
+        var uid;
+        var UserName;
+        var checkcode;
+        var status = "";
+        var bh = "";
+        var prepayId ="";
+        appcan.ready(function() {
+            appcan.initBounce();
+            //userId = appcan.locStorage.getVal('userId');
+            //orderId = appcan.getLocVal('orderId');
+            orderId=appcan.locStorage.getVal('orderId'); 
+            uid=appcan.locStorage.getVal('userId');
+            UserName=appcan.locStorage.getVal('userName');
+            checkcode=appcan.locStorage.getVal('checkcode');
+            jsonStr='{"orderId":"'+orderId+'","UserName":"'+UserName+'","CheckCode":"'+checkcode+'","uid":"'+uid+'"}';
+            //登录成功后返回的值
+            /*
+             appcan.window.subscribe('login-meishi',function(msg){
+                       var userName=JSON.parse(msg)[0].userName;
+                       var photo=JSON.parse(msg)[0].photo;
+                       userId=JSON.parse(msg)[0].id;
+                       //鏀惰棌-----鐧诲綍鎴愬姛鍚庣紦瀛樼櫥褰曠姸鎬佺粰涓汉涓績
+                       //appcan.locStorage.setVal('islog',1);
+                       //appcan.locStorage.setVal('userId',userId);
+                       //appcan.locStorage.setVal('userName',userName);
+                       //appcan.locStorage.setVal('photo',photo);
+                       //appcan.locStorage.setVal('yemian','meishi');
+                     
+                       });*/
+            getShopDetail(jsonStr);
+            data();
+            
+            if(appcan.locStorage.getVal('ddje')==null){
+                $("#zfdj").html('');
+            }else{
+               $("#zfdj").html('('+appcan.locStorage.getVal('ddje')+')');
+            }
+        
+        });
+        //获取详细信息
+        function getShopDetail(jsonStr) {
+            var url = GetPostUrl.gUrl() +'MobileService.asmx/GetOrders?jsonStr=' + jsonStr;
+          //  console.log('url111==' + url);
+            $.ajax({dataType:'text',
+                url: url,
+                type: 'GET',
+                data: {},
+                offline: true,
+                offlineDataPath: 'wgt://aaa/',
+                success: function(data) {
+                    $('#sp').html('');
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", "").replace("<string xmlns=\"http://tempuri.org/\">", "").replace("</string>", ""));
+                //    console.log('data==' + data);
+                    var str = '';
+                    var zj = 0;
+                    if (data.Error.ErrorCode == '0') {
+                        //展示数据      
+                        if (data.Result[0].OrderStatus == 0) {
+                            status = "未支付"
+                            document.getElementById('zf').style.display = "";
+                            document.getElementById('Delete').style.display = "";
+                        } else if (data.Result[0].OrderStatus == 1) {
+                            status = "已支付定金"
+                        } else if (data.Result[0].OrderStatus == 2) {
+                            status = "已发货"            
+                        } else if (data.Result[0].OrderStatus == 3) {
+                            status = "完成"
+                        }
+
+                        $("#bh").text(data.Result[0].OrderNo);
+                        $("#sj").text(data.Result[0].Sendtime);
+                        $("#zt").text(""+status);
+                        $("#xdrq").text(data.Result[0].Createtime);
+                        $("#shr").text(data.Result[0].Shr);
+                        $("#lxdh").text(data.Result[0].Lxdh);
+                        $("#shdz").text(data.Result[0].Shdz);
+                        if (data.Result[0].Pscl == null || data.Result[0].Pscl.trim() == "") {
+                            $("#pscl").text("暂无");
+                        } else {
+                            $("#pscl").text(data.Result[0].Pscl);
+                        }
+                        if (data.Result[0].Sjdh == null || data.Result[0].Sjdh.trim() == "") {
+                            $("#pscl").text("暂无");
+                        } else {
+                            $("#sjdh").text(data.Result[0].Sjdh);
+                        }
+                //str += '<table class="ub-fh" >' + '<tr align="center" class="ubb ub bc-border bc-text ub-ac uinn-a91">' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '型号' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '规格' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '电压' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '单价' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '米数' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '小计' + '</td>' + '<td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">' + '编号' + '</td>' + '</tr>' + '<tr align="center" class="ubb ub bc-border bc-text ub-ac uinn-a91">' + '<td  class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Xh + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Gg + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Dy + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Dj + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Sl + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + data.Result[0].Mingxi[i].Xj + '</td>' + '<td class="ub-f1 uw-infor1 ut-s sc-text1  umar-r-infor ulev-app1">' + bh + '</td>' + '</tr>' + '</table>';
+                 
+                        for (var i = 0; i < data.Result[0].Mingxi.length; i++) {
+                            if (data.Result[0].Mingxi[i].Bh != null) {
+                                bh = data.Result[0].Mingxi[i].Bh;
+                            }
+                                str +='<tr align="center" class="ubb ub bc-border bc-text ">' + '<td  class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Xh + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Gg + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Dy + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Dj + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Sl + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + data.Result[0].Mingxi[i].Xj + '</td>' + '<td class="ub-f1 uw-infor3 ut-s sc-text1  umar-r-infor ulev-app3">' + bh + '</td>';
+                            zj += data.Result[0].Mingxi[i].Xj
+                
+                        }
+
+                        if (parseInt(zj) != zj) {
+                            zj = zj.toFixed(1)
+                        }
+                        $("#hj").text(zj);
+                         $("#money").text(zj);
+                     //   console.log('data==' + str);
+                        $('#sp').append('<table class="ub-fh" align="center" ><tr align="center" class="ubb ub bc-border bc-text "><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">型号</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">规格</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">电压</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">单价</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">米数</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">小计</td><td class="ub-f1 uw-infor ut-s sc-text  umar-r-infor ulev-app1">编号</td></tr>'+str+'</tr></table>');
+                    }
+                }
+            });
+        }
+               
+    //获取预付定金的百分比
+    function data(){
+                type='2';
+                jsonStr='{"type":"'+type+'"}';
+                url = GetPostUrl.gUrl() +"MobileService.asmx/GetOthers?jsonStr="+jsonStr;
+             //   console.log('111111111=='+url);
+                $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {   
+                  data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+               //   console.log('3333333333=='+data);
+                   if (data.Error.ErrorCode=='0') {
+                       $("#bfbi").html(data.Result[0].others);
+                       $("#bfb").text(data.Result[0].others.replace("%",""));
+                    }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }                  
+                    
+                  },
+                    error : function(xhr, type) {
+                        alert('网络出错了!')
+                    }
+                })
+     }
+            
+  
+  
+  
+      //微信支付
+
+            appcan.button("#zf", function() {
+              var m=$("#money").text();
+               var b=$("#bfb").text();
+               if(m!=''&&m!=null&&b!=''&&b!=null&&m!=undefined&&b!=undefined&&$("#bh").text()!="读取中...")
+               { 
+                   var a=parseFloat(m)*parseFloat(b)*0.01;
+                      
+                          
+           appcan.locStorage.setVal('orderMoney',a.toFixed(1)+"A"+$("#bh").text()); 
+                 appcan.window.open({
+                                     name : "wxzf"+Math.random(),
+                                     data : "weixinFw/wxzfAPP.html"
+                                                   
+                                              });                    
+/*
+            var params = {
+                    windowName : "wxzf"
+                    };
+                    uexWeiXin.setCallbackWindowName(JSON.stringify(params));*/
+
+                 var Appid =WeixinFw.appID_APP();
+             
+                  uexWeiXin.registerApp(Appid); 
+                  }else{
+                       appcan.window.openToast('支付失败!','2000',5,0);
+                  }                  
+            })
+
+
+  
+             //取消订单
+             function Deletedata(){
+             
+              if(window.confirm('您确定要取消订单吗？')){     
+                        Delete();
+                        return true;
+            }  
+  
+         }
+  
+  
+  
+  
+  
+            //取消订单接口
+          function Delete(){
+            var page="0";
+            var pageSize="5";
+            //appcan.locStorage.setVal('yemian','meishi');
+             var oid=appcan.locStorage.getVal('orderId'); 
+             uid=appcan.locStorage.getVal('userId');
+             UserName=appcan.locStorage.getVal('userName');
+             checkcode=appcan.locStorage.getVal('checkcode');
+            // console.log('qqqqqqqqqq=='+uid);
+            // console.log('qqqqqqqqqq=='+UserName);
+           //  console.log('qqqqqqqqqq=='+checkcode);
+             jsonStr='{"orderId":"'+oid+'","UserName":"'+UserName+'","CheckCode":"'+checkcode+'","uid":"'+uid+'"}';
+            
+            var url=GetPostUrl.gUrl() +'MobileService.asmx/OrderCancel?jsonStr='+jsonStr;
+          //  console.log('url111=='+url);
+              $.ajax({dataType:'text',
+                url : url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                    //alert(data);
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                                       
+                    if(data.Error.ErrorCode=='0'){ 
+                          appcan.locStorage.setVal('yemian', 'sub1');
+                    
+                           appcan.window.open({
+                           name : "order_list"+Math.random(),
+                           data : "orderlist.html",
+                         });
+                        
+                                                          
+                    }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+                 error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('删除失败!','2000',5,0);
+                }
+            });
+          
+        }
+     
+        //md5加密           
+        function md5(md5) {
+            var Md5 = "";
+            Md5 = hex_md5(md5);
+            return Md5;
+        }
+        //大写转换
+        function englishConvert(str) {
+            $("#content").val(text.toUpperCase());
+        }
+/*
+           function Tourl ( ) {
+               var m=$("#money").text();
+               var b=$("#bfb").text();
+               if(m!=''&&m!=null&&b!=''&&b!=null&&m!=undefined&&b!=undefined&&$("#bh").text()!="璇诲彇涓�..")
+               { 
+                   var a=parseFloat(m)*parseFloat(b)*0.01;
+                      
+                          
+           appcan.locStorage.setVal('orderMoney',a.toFixed(1)+"A"+$("#bh").text());
+   appcan.window.open({
+                                            name : 'weixinFw',
+                                            data : 'weixinFw/wx.html',
+                                            aniId : '10'
+                                        })}
+                                        else
+                                        {
+                                             appcan.window.openToast('鏀粯澶辫触!璇疯繑鍥為噸鏂拌繘鍏ヨ椤甸潰','2000',5,0);
+                                        }
+                                    }*/
+
+    </script>
+
+</html>

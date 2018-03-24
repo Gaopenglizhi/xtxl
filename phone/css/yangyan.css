@@ -1,0 +1,51 @@
+.yy_uwh-set3{
+    width: 4.25em;
+    height: 4.25em;
+}
+.yy_umar-t{
+    margin-top: 2.8em;
+}
+.yy_ulev-2 {
+    font-size: 0.9em !important;
+}
+.yy_h{
+   /* height: 5.75em;*/
+}
+.yy_sc-bg{
+    background-color: #FFFFFF;
+}
+.yy_ulev-1{
+     font-size: 0.843em !important;
+}
+
+.yy_bcimg{
+ background-image: url('icons/yy_img.png');
+ width: 19em;
+ height: 9em;
+}
+.1{
+background-color: #5EFD3B;
+}
+
+
+.yy{
+    height: 150px;
+    width: 300px;
+    overflow: scroll;
+}
+.yy_umar-r{
+    margin-right: 1.4em;
+}
+.yy_addPhoto{
+    background-image:url('css/res/yy_add.png');
+    width: 10em;
+    height: 10em;
+}
+.yy_ub-img
+{
+    -webkit-background-size:contain;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:left;
+}
+

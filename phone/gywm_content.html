@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="personal_content/css/main.css">
+        <link rel="stylesheet" href="css/yangyan.css">
+    </head>
+    <body id="zzym" class="um-vp bc-bg "   ontouchstart>
+     
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/yangyan.js"></script>
+
+    </body>
+    <script>
+    
+          var type="";
+          appcan.ready(function() {
+                  data();
+        })
+        
+
+    function data(){
+                type='5';
+                jsonStr='{"type":"'+type+'"}';
+                url = GetPostUrl.gUrl() +"MobileService.asmx/GetOthers?jsonStr="+jsonStr;
+             //   console.log('111111111=='+url);
+                $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                  data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));                     
+                    if (data.Error.ErrorCode=='0') { 
+                        //document.getElementById('ym').src=data.Result[0].others;
+                         var ul=data.Result[0].others;
+                         ul=ul.replace("&amp;","&");
+                   //      console.log("222222222="+ul);
+                         url1(ul);
+                    }
+                  },
+                    error : function(xhr, type) {
+                        alert('网络出错了!')
+                    }
+                })
+     }
+       function url1(url) {
+         window.location.href=url;
+     }
+     //获取Html 
+function htmlDecode( html ) {
+  var a = document.createElement( 'a' ); a.innerHTML = html;
+  return a.textContent;
+};
+function html_decode(str)
+  {
+    var s = "";
+    if (str.length == 0) return "";
+    s = str.replace(/>/g, "&");
+    s = s.replace(/</g, "<");
+    s = s.replace(/>/g, ">");
+    s = s.replace(/ /g, " ");
+    s = s.replace(/'/g, "\'");
+    s = s.replace(/"/g, "\"");
+    s = s.replace(/<br>/g, "\n");
+    return s;
+  }                   
+
+    </script>
+</html>

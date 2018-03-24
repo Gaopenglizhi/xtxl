@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title><meta name="viewport" content="width=device-width" /></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="personal_content/css/main.css">
+        <link rel="stylesheet" href="css/yangyan.css">
+    </head>
+       <body class="um-vp bc-bg " style="background-color: #f7f7f7" ontouchstart>
+
+        <!--下面功能-->
+      <div class="ub ub-ver ub-f1">
+            <div id="listview" class=" bc-border yy_sc-bg" >
+
+
+             </div>
+     </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/yangyan.js"></script>
+     <script src="js/appcan.listview.js"></script>
+
+    </body>
+    <script>
+    
+          var pageIndex="";
+          var pageSize="";
+          var str="";
+          var cd="";
+          var index=0;
+          var a;
+          appcan.ready(function() {
+                  
+                  //window.location.href='http://www.baidu.com';
+                              //下拉刷新
+                 
+                  //uexWindow.setBounce(1);  
+                  initBounce(0,1);
+                  data(index); 
+        })
+        
+//上下拉刷新
+function initBounce(funcTop, funcBottom){ 
+     
+           appcan.frame.setBounce([funcTop,funcBottom], function(type) {
+                $("#pullstatus"+type).html(!type?"开始下拉":"开始上拖");
+
+            },function(type) {
+                $("#pullstatus"+type).html("松手了,产生事件了,开始更新数据！");
+
+                setTimeout(function() {
+            //上拉刷新
+                 if(!type){
+                    str="";
+                    data(0,type);           
+                }else{
+                    //下拉刷新
+                      if(a>0){
+                       index++; 
+                     }
+                  if(index==0){
+                     index=1; 
+                    } 
+                    data(index,type); 
+                }
+                    appcan.frame.resetBounce(type);
+                    $("#pullstatus"+type).html("");
+                    demo.add(updateData,type);
+              }, 1000);
+        });
+
+}
+                
+                
+               
+               
+               
+                
+    function data(index,type){
+                pageIndex=index;
+                pageSize='10'
+                   var  jsonStr='';
+                   var id=  appcan.locStorage.getVal('userId');
+                   var Uname= appcan.locStorage.getVal('userName');
+                  var code= appcan.locStorage.getVal('checkcode');
+           
+            if(id==null){
+                 jsonStr='{\"pageIndex\":\"'+pageIndex+'\",\"pageSize\":\"'+pageSize+'\"}';
+            }
+            else{
+             jsonStr='{\"pageIndex\":\"'+pageIndex+'\",\"pageSize\":\"'+pageSize+'\",\"UserName\":\"'+Uname+'\",\"CheckCode\":\"'+code+'\",\"uid\":\"'+id+'\" } ';
+   }
+                
+ 
+                url = GetPostUrl.gUrl() +"MobileService.asmx/GetNews?jsonStr="+jsonStr;
+              //  console.log('111111111=='+url);
+                $.ajax({
+                url :url,
+                type : 'GET', 
+                 dataType:'text',                            
+              //  data : {
+
+              //  },
+               // offline : true,
+               // offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                     
+                  data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));                     
+                    if (data.Error.ErrorCode=='0') {
+                        $('#listview').html('');
+                        if(data.Result.length>0){
+                             for(var i=0;i<data.Result.length;i++){
+                                cd=cutString(data.Result[i].Title,22);
+                                 str+='<ul><li class="ubb ub bc-border bc-text ub-ac lis" id="'+i+'" data-index="0" onclick="openDetail(\''+data.Result[i].Url+'\')">'
+                                 +'<div class="lv_title ub-f1 marg-l ub ub-ver ut-m line1">'
+                                 +cd
+                                 +'</div>'
+                                 +'<div class="lv_title  marg-l ub ub-ver ut-m line1" style="right: 1em">'
+                                 +data.Result[i].Date
+                                 +'</div>'
+                                 +'<div class="fa fa-angle-right ulev2 sc-text">'
+                                 +'</div>'
+                                 +'</li></ul>';
+                                 
+                                 
+                             }
+                      //    console.log('222222222=='+data.Result[0].Title);
+
+                       if(type){
+                           a=1;
+                       }
+                          
+                       }else{
+                           a=data.Result.length;
+                           if(index>0){
+                               if(!type){
+                                   appcan.window.openToast('暂无最新数据!','2000',5,0);
+                               }else{
+                                   appcan.window.openToast('暂无更多数据!','2000',5,0);
+                               }               
+                           }else{
+                               appcan.window.openToast('暂无数据!','2000',5,0);
+                           }
+                           
+                       }
+                       $('#listview').append(str);
+                    }
+                  },
+                    error : function(xhr, type) {
+                       // alert('网络出错了!')
+                    }
+                })
+ 
+     }
+             function openDetail(url){
+            window.localStorage["url"]=url;
+                 appcan.window.open({
+                           name : "xwxq",
+                           data : "xwxq.html",
+                       });
+          
+                }
+                
+ function cutString(str, len) {
+    //length属性读出来的汉字长度为1
+    if(str.length*2 <= len) {
+        return str;
+    }
+   var strlen = 0;
+   var s = "";
+    for(var i = 0;i < str.length; i++) {
+        s = s + str.charAt(i);
+        if (str.charCodeAt(i) > 128) {
+            strlen = strlen + 2;
+            if(strlen >= len){
+                return s.substring(0,s.length-1) + "...";
+            }
+        } else {
+            strlen = strlen + 1;
+            if(strlen >= len){
+                return s.substring(0,s.length-2) + "...";
+            }
+        }
+
+    }
+    return s;
+}
+               
+     //获取Html 
+function htmlDecode( html ) {
+  var a = document.createElement( 'a' ); a.innerHTML = html;
+  return a.textContent;
+};
+function html_decode(str)
+  {
+    var s = "";
+    if (str.length == 0) return "";
+    s = str.replace(/>/g, "&");
+    s = s.replace(/</g, "<");
+    s = s.replace(/>/g, ">");
+    s = s.replace(/ /g, " ");
+    s = s.replace(/'/g, "\'");
+    s = s.replace(/"/g, "\"");
+    s = s.replace(/<br>/g, "\n");
+    return s;
+  }                   
+
+    </script>
+</html>

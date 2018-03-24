@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<widget appId="11510091" channelCode="0000" height="480" pid="" sreensize="4.5" version="00.01.0003" viewmode="application" widgetId="" width="320">
+	
+	<name>信泰线缆</name>
+	<description/>
+	<author email=""> </author>
+	<icon src="icon.png"/>
+	<license href=""/>
+	<content encoding="utf-8" src="startpage.html"/>
+	<updateurl/>
+	<logserverip>192.168.2.72</logserverip> 
+	<showmyspace>false</showmyspace>
+	<obfuscation>true</obfuscation>
+	<bgcolor>#fefefe</bgcolor>
+	<orientation>1</orientation>
+<debug>false</debug>
+<partobfuscation>false</partobfuscation>
+<webapp>true</webapp>
+<config desc="uexBaiduMap" type="KEY">
+    <param name="$uexBaiduMap_APIKey$" platform="Android" value="W8QFi0mqLf7b796Ok621jB7DqkW4zRk6"/>
+</config>
+<config desc="uexBaiduMap" type="KEY">
+    <param name="$uexBaiduMap_APIKey$" platform="iOS" value="e1j7FzTffx300yUwrh10zeIibqSbVXII"/>
+</config>
+<config desc="uexWeiXin" type="URLSCHEME">
+<urlScheme name="uexWeiXin" schemes="['wx12642ce85db53abd']"/>
+</config>
+<config desc="whiteList" type="AUTHORITY">
+    <permission info="urlSchemeWhiteList" platform="iOS">
+        <string>wechat</string>
+        <string>weixin</string>
+    </permission>
+</config>
+</widget>

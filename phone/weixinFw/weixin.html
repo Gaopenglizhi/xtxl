@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title> 微信支付</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="../css/ui-box.css"> <script type="text/javascript" src="../js/ty.js"></script>
+        <link rel="stylesheet" href="../css/ui-base.css">
+        <link rel="stylesheet" href="../css/ui-color.css">
+        <link rel="stylesheet" href="../css/appcan.icon.css">
+        <link rel="stylesheet" href="../css/appcan.control.css">
+       
+        <link rel="stylesheet" href="../css/yangyan.css">
+    </head>
+    <body id="zzym" class="um-vp bc-bg "   ontouchstart>
+
+     
+    </body>
+    <script src="../js/appcan.js"></script>
+    <script src="../js/appcan.control.js"></script>
+     <script src="../js/yangyan.js"></script>
+
+    </body>
+    <script>
+        function onBridgeReady(){
+            appcan.window.openToast( "正在加载,请稍后...", '10000', 5, 0);
+    var mo= appcan.locStorage.getVal('orderMoney');
+                 var jsonStr="{\"order\":\""+mo+"\"}";
+                  var url=GetPostUrl.gUrl() +"MobileService.asmx/Getwx?jsonStr="+jsonStr;
+               
+           $.ajax({
+                        type: "get",
+                        url: url,
+                        dataType: "text",
+                        success: function (data) {
+                           // appcan.window.openToast( data, '5000', 5, 0);
+                              data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                              if (data.Error.ErrorCode=='0') {
+                                  appcan.window.closeToast();
+                                  if(data.Result[0].appId==null||data.Result[0].appId==undefined)
+                                  {
+                                      if(appcan.locStorage.getVal('replay')==null||appcan.locStorage.getVal('replay')==undefined||appcan.locStorage.getVal('replay')=='0'){
+                                        appcan.window.openToast( "微信支付失败 ，正在重试...", '2000', 5, 0);   
+                                          appcan.locStorage.setVal('replay','1');
+              var url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WeixinFw.appID()+"&redirect_uri="
+           + encodeURIComponent (GetPostUrl.gUrl()+"weixinZF/wxzf.aspx") +
+           "&response_type=code&scope=snsapi_base&state="+mo+"#wechat_redirect";
+                  window.location.href=url;
+                                  }else
+                                  {
+                                      alert("支付失败!");
+            window.location.href="../orderlist.html";
+                                  }
+                                  }
+                                  else
+                                  {
+             
+           
+   WeixinJSBridge.invoke(
+       'getBrandWCPayRequest', {
+                                   "appId": data.Result[0].appId,     //公众号名称，由商户传入
+                                    "timeStamp": data.Result[0].timeStamp,         //时间戳，自1970年以来的秒数
+                                    "nonceStr": data.Result[0].nonceStr, //随机串
+                                    "package": data.Result[0].package,
+                                    "signType": "MD5",         //微信签名方式：
+                                    "paySign": data.Result[0].paySign //微信签名
+       },
+       function(res){     
+           if(res.err_msg == "get_brand_wcpay_request:ok" ) 
+           {alert("支付成功!");
+                       window.location.href="../orderlist.html";
+           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+           else
+           {alert("支付失败!");
+            window.location.href="../orderlist.html";
+           }
+            
+       }
+   ); 
+   }
+   }
+   else
+   {
+       alert("支付错误");
+   }
+   },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                              appcan.window.openToast('网络错误!!', '2000', 5, 0);
+                        }
+                    });
+   
+}
+if (typeof WeixinJSBridge == "undefined"){
+   if( document.addEventListener ){
+       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+   }else if (document.attachEvent){
+       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+   }
+}else{
+   onBridgeReady();
+}
+    </script>
+    
+</html>

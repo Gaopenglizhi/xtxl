@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="login_content/css/main.css">
+           <script src="js/ty.js">
+        </script>
+                <style type="text/css">
+            /* Demo Page styling, you can ignore this in your implementation */
+           .div_bxdd{ border:1px solid #e3e4e8;
+            padding:10px; background: #fff; margin: 5px 0 5px 0; border-radius: 10px
+            0px 10px 0px;} .div_ddxh{ background:#f6f6fa; border:1px dashed #d9dde3;
+            border-radius:6px; padding:0px 20px; font-size:0.8em; color:#333; font-weight:bold;
+            line-height:210%;} .div_ddxh span{ float:right;} .div_ddxh img{ border:0px;
+            margin:0px 8px;align-items: center;} .div_cpgg{ margin:0px 20px; font-size:0.9em;
+            color:#000; line-height:200%;} 
+
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver uinn-a3 ub-fv">
+            <div class="ub ub-ver uinn uinn-at1">
+                
+                    <div class="umar-a uba bc-border c-wh">
+                        <div class="ub ub-ac ubb umh5 bc-border ">
+                            <div class=" uinput ub ub-f1">
+                                <div class="uinn fa fa-user sc-text"></div>
+                                <input placeholder="请输入收货人姓名" type="text" class="ub-f1" id="name">
+                            </div>
+                        </div>
+                        <div class="ub ub-ac ubb umh5 bc-border ">
+                            <div class=" uinput ub ub-f1">
+                                <div class="uinn fa fa-lock sc-text"></div>
+                                <input placeholder="请输入联系电话" type="text" class="ub-f1" id="mobile">
+
+                            </div>
+                        </div>
+                         <div class="ub ub-ac  umh5 bc-border ">
+                            <div class=" uinput ub ub-f1">
+                                <div class="uinn fa fa-user sc-text"></div>
+                                <input placeholder="请输入收货地址" type="text" class="ub-f1" id="address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        
+                        <div class="uinn-at1">
+                            <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a" id="sub">
+                              提交订单
+                            </div>
+                        </div>
+
+           <div id="addPhotoLabel" style="top: 2em;">
+
+         
+            </div>
+
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/yangyan.js"></script>
+        <script src="js/md5.js"></script>
+    </body>
+    <script>
+    var photo='';
+        appcan.ready(function() {
+       var id=  appcan.locStorage.getVal('userId');
+                
+           
+   
+            if(id==null){
+                       alert('请您先登录！');
+                       appcan.window.open("login","login.html");
+                       appcan.locStorage.setVal('yemian', 'sub');
+                   }else{
+                       cylxr();
+                   }
+      
+        })
+        appcan.button("#sub", "ani-act", function() {
+          sub();
+          
+        })
+           
+
+     function sub() {
+           
+           var name=$("#name").val();
+           var mobile=$("#mobile").val();
+           var address=$("#address").val();
+            var url="";
+                var id=  appcan.locStorage.getVal('userId');
+                var Uname= appcan.locStorage.getVal('userName');
+                  var code= appcan.locStorage.getVal('checkcode');
+           
+            if(id==null){
+                 alert('请先登录');
+                 appcan.window.open("login","login.html");
+                 appcan.locStorage.setVal('yemian', 'sub');
+             }
+                else
+                {
+                
+           
+      var  jsonStr='{"UserName":\"'+Uname+'\","CheckCode":\"'+code+'\","uid":\"'+id+'\", "shr":\"'+ encodeURI(name)+'\", "lxdh":\"'+ encodeURI(mobile)+'\", "shdz":\"'+ encodeURI(address)+'\",';
+                 
+                jsonStr+=appcan.locStorage.getVal("index_js");
+                url=GetPostUrl.gUrl() +"MobileService.asmx/OrderSubmit?jsonStr="+jsonStr;
+      
+         
+            $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',  
+                //contentType:'application/x-www-form-urlencoded; charset=UTF-8',                         
+                data : {
+
+                },
+                                      
+                success : function(data) {
+                     // alert(data);
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+             appcan.locStorage.setVal('orderId',data.Result[0].orderId);
+            appcan.locStorage.setVal('yemian','sub');
+                appcan.window.open({
+                name:'order_content'+Math.random(),
+                data:'order.html',
+            })
+                                         
+                                 //如果是从列表打开的登录------------------
+
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('提交失败!','2000',5,0);
+                }
+            });
+           }
+        }
+        
+         function cylxr() {
+ 
+            var id=  appcan.locStorage.getVal('userId');
+            var Uname= appcan.locStorage.getVal('userName');
+            var code= appcan.locStorage.getVal('checkcode');
+            
+          var  jsonStr='{"UserName":"'+Uname+'","CheckCode":"'+code+'","uid":"'+id+'"}';       
+           url=GetPostUrl.gUrl() +"MobileService.asmx/GetShr?jsonStr="+jsonStr;
+          
+        
+         
+            $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',  
+                //contentType:'application/x-www-form-urlencoded; charset=UTF-8',                         
+                data : {
+
+                },
+                                      
+                success : function(data) {
+                     // alert(data);
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+                        $('#addPhotoLabel').html('');
+                        var str="";
+                        if(data.Result.length>0){                     
+                        for(var i=0;i<data.Result.length;i++){                         
+                           str+='<div id="divo"  class="div_bxdd">'
+                              +'<div class="div_ddxh">'
+                              +'<img id="'+i+'Img" onclick="TestBlack(\''+i+'cy\',\''+i+'Img\');"  src="css/images/h_jt_bottom.png" style="width: 1em;height:1em">收货人：'+data.Result[i].Shr+'<span  onclick="Delete(\''+data.Result[i].Id+'\');">删除</span>'
+                              +'</div>'
+                              +'<div id="'+i+'cy" onclick="add(\''+data.Result[i].Shr+'\',\''+data.Result[i].Lxdh+'\',\''+data.Result[i].Shdz+'\');">'
+                              +'<div class="div_cpgg">联系电话：<span>'+data.Result[i].Lxdh+'</span></div>'
+                              +'<div class="div_cpgg">收货地址：<span>'+data.Result[i].Shdz+'</span></div>'
+                              +'</div>'
+                              +'</div>';
+                           }
+                    var div = document.createElement("div");
+                  
+                    div.innerHTML = str;
+                    document.getElementById("addPhotoLabel").appendChild(div);
+                    //document.getElementById("addPhotoLabel").append(str);
+                    }
+                   
+                    //document.write(document.getElementById("addPhotoLabel").innerHTML);
+                     
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('提交失败!','2000',5,0);
+                }
+            });
+
+         
+
+        }
+
+      function Delete(id){                
+                 if(window.confirm('您确定要删除吗？')){
+                  Deletedata(id);
+                  return true;
+                }
+                  
+             }
+             
+        function Deletedata(shrid){
+              var id=  appcan.locStorage.getVal('userId');
+              var Uname= appcan.locStorage.getVal('userName');
+              var code= appcan.locStorage.getVal('checkcode');
+              var shrId= shrid;
+            var  jsonStr='{"UserName":"'+Uname+'","CheckCode":"'+code+'","uid":"'+id+'","shrId":"'+shrId+'"}';  
+            
+            var url=GetPostUrl.gUrl() +'MobileService.asmx/DeleteShr?jsonStr='+jsonStr;
+         
+            $.ajax({dataType:'text',
+                url : url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                    //alert(data);
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                                       
+                    if(data.Error.ErrorCode=='0'){                                         
+                         appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                         document.getElementById("name").value="";
+                         document.getElementById("mobile").value="";
+                         document.getElementById("address").value="";
+                         cylxr();   
+                    }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+                 error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('删除失败!','2000',5,0);
+                }
+            });
+          
+        }
+         function add(shr,lxdh,shdz) {
+         document.getElementById("name").value=shr;
+         document.getElementById("mobile").value=lxdh;
+         document.getElementById("address").value=shdz;
+
+         }
+         function TestBlack(TagName,imgid){
+          var obj = document.getElementById(TagName);         
+          if(obj.style.display==""){
+          obj.style.display = "none"; 
+          document.getElementById(imgid).src="css/images/h_jt_left.png";
+          document.getElementById(imgid).style.width="3em";       
+           }else{
+               obj.style.display = "";
+               document.getElementById(imgid).src="css/images/h_jt_bottom.png";
+               document.getElementById(imgid).style.width="1em"; 
+              }
+            }
+    </script>
+</html>

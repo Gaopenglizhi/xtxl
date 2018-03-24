@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+       <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="order_list/css/main.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver">
+            <div id="order_list" class=" ub-ver uinn-a2 ub-f1">
+                 <div   style="height:100%">
+</br>
+</br>
+</br>
+                         <ul  class=" bc-text  uinn-a9  tx-sz">
+                             <center>
+                             <span id="xh" style="margin-right: 5em"></span> <span id="dy" ></span>  
+                              </center>
+                         </ul>
+</br>
+
+                         <ul  class="bc-text  uinn-a9 tx-c1">
+                             <center>
+                             <span >库存总量：</span><span id="kczl" >读取中...</span> 
+                             </center>
+                         </ul>
+
+                         <ul  class=" bc-text  uinn-a9  sc-text" style="margin-top:7em;">
+                             
+                         </ul>
+                     <div id="zs" style="bottom: 7em">
+                       
+                        
+                     </div>                                    
+              </div>
+            </div>
+        </div>
+    </body>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+    <script>
+        var titHeight = 0;
+        var typeId = '00';
+        var uid="";
+        var UserName="";
+        var checkcode="";
+        var jsonStr="";
+        var str="";
+        appcan.ready(function() {
+            //titHeight = appcan.getLocVal('titHeight');
+            //appcan.setLocVal("height1",height1);
+            //typeId  = appcan.getLocVal('typeId');
+/*
+            if(typeId==undefined){
+                typeId = '00';
+            }*/
+           getFoodList();
+        });
+
+         //获取订单列表
+        function getFoodList(){
+
+            //appcan.locStorage.setVal('yemian','meishi');
+             
+             id=appcan.getLocVal('xhid');
+             jsonStr='{"id":'+id+'}';
+    
+              var url=GetPostUrl.gUrl() +'MobileService.asmx/GetKucun?jsonStr='+jsonStr;
+           //   console.log('url111=='+url);
+             $.ajax({dataType:'text',
+                url : url,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                    //alert(data);
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                    var str=""; 
+                    var str1="";                                         
+                    if(data.Error.ErrorCode=='0'){                   
+                        if(data.Result.length>0){
+                        document.getElementById("xh").innerText = data.Result[0].Xinghao;
+                        document.getElementById("dy").innerText = data.Result[0].Dianya;
+                        document.getElementById("kczl").innerText = data.Result[0].Zongliang;
+                        //循环展示数据
+                          $('#zs').html(''); 
+                          var sheng='';
+                           var shi='';
+                       for(var i=0;i<data.Result[0].Shengshi.length;i++){
+                           if(data.Result[0].Shengshi[i].Sheng!=null){
+                                          sheng=data.Result[0].Shengshi[i].Sheng;
+                                     }else if(data.Result[0].Shengshi[i].Shi!=null){
+                                          shi=data.Result[0].Shengshi[i].Shi;
+                                     } 
+                             str +='<ul  class="bc-text  uinn-a9  sc-text" style="background-color: #f7f8fa" onclick="TestBlack(\''+i+'XY\');">'
+                                 +'<span>'
+                                 +sheng
+                                 +'</span>' 
+                                 +'<span style="margin-left: 3em">'
+                                 +shi
+                                 +'</span> '  
+                                 +'</ul>'
+                                 +'<table  id="'+i+'XY" class="ub-fh" style="display:none;">'
+                                 +'</table>';
+                          }
+                          $('#zs').append(str); 
+                              for(var a=0;a<data.Result[0].Shengshi.length;a++){         
+                                 for(var b=0;b<data.Result[0].Shengshi[a].Kucun.length;b++){
+                                     
+                                   if(b%2==0){
+                                   str1+='<tr  align="center" class=" ub bc-border bc-text ub-ac uinn-a91" style="background-color: #ffffff">'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Guige 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Mishu 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Bianhao 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Beizhu 
+                                   +'</td>'
+                                   +'</tr>';   
+                                     }else{
+                                    str1+='<tr  align="center" class=" ub bc-border bc-text ub-ac uinn-a91" style="background-color: #fbfaf5">'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Guige 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Mishu 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Bianhao 
+                                   +'</td>'
+                                   +'<td class="ub-f1 uw-infor1 ut-s sc-text  umar-r-infor ulev-app1">'
+                                   +data.Result[0].Shengshi[a].Kucun[b].Beizhu 
+                                   +'</td>'
+                                   +'</tr>';   
+                                     }
+                                 
+                              
+                                 }
+                                  pbg('#'+a+'XY','<tr  align="center" class=" ub bc-border bc-text ub-ac uinn-a91" style="background-color: #dfe9f2"><td class="ub-f1 uw-infor1 ut-s   umar-r-infor ulev-app1">规格</td><td class="ub-f1 uw-infor1 ut-s   umar-r-infor ulev-app1">米数</td><td class="ub-f1 uw-infor1 ut-s   umar-r-infor ulev-app1">编号</td><td class="ub-f1 uw-infor1 ut-s  umar-r-infor ulev-app1">备注</td> </tr>'+str1);
+                                  str1="";
+                                //  console.log("11111111=="+str1);
+                             }                             
+                                                               
+                    }
+                  }
+                }
+            
+            });
+   
+}
+
+//动态显隐表格
+        function TestBlack(TagName){
+          var obj = document.getElementById(TagName);
+          if(obj.style.display==""){
+          obj.style.display = "none";
+           }else{
+               obj.style.display = "";
+              }
+}
+        function pbg(tag,sr){
+           $(tag).append(sr);
+}
+    </script>
+</html>

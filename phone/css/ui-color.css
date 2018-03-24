@@ -1,0 +1,148 @@
+div{
+    font-family: 微软雅黑;
+}
+/*****************************************/
+/*基础header颜色*/
+.bc-head {
+    background-color: #323232;
+}
+/*****************************************/
+/*基础body背景颜色*/
+.bc-bg {
+    background-color: #fafafa;
+}
+.bc-bg1 {
+    background-color: #dddddd;
+}
+/*辅助控件背景颜色*/
+.sc-bg {
+    background-color: #FFFFFF;
+}
+/*辅助控件背景颜色*/
+.sc-bg-active {
+    background-color: #EEEEEE;
+}
+/*警告背景色*/
+.sc-bg-alert {
+    background-color: #38a2c5;
+}
+/*****************************************/
+/*基础字体颜色*/
+.bc-text {
+    color: black;
+}
+/*基础标题字体颜色*/
+.bc-text-head {
+    color: white;
+}
+/*辅助字体颜色*/
+.sc-text {
+    color: #848484;
+}
+/*辅助字体颜色*/
+.sc-text-active {
+    color: #66c769 !important;
+}
+/*辅助字体颜色*/
+.sc-text-hint {
+    color: #E3E3E3;
+}
+/*辅助字体颜色*/
+.sc-text-warn {
+    color: #38a2c5;
+}
+/*辅助字体颜色*/
+.sc-text-tab {
+    color: #636363;
+}
+/*****************************************/
+/*基础边框颜色*/
+.bc-border {
+    border-color: #BABABA;
+}
+/*辅助边框颜色*/
+.sc-border {
+    border-color: #FFFFFF;
+}
+.sc-border-tab {
+    border-color: #cdcdcd;
+}
+/*****************************************/
+/*基础按钮颜色*/
+.bc-btn {
+    background-color: #38a2c5;
+}
+/*辅助按钮颜色*/
+.sc-btn {
+    background-color: #38a2c5;
+    font-family: 微软雅黑;
+    font-size:0.6em;
+    font-weight: bold;
+    border-radius: 5px 5px 5px 5px;
+   
+}
+.bcc-btn
+{
+    background-color: #124758; 
+    margin: 10px 0 10px 0;
+}
+
+.sc-sub {
+    background-color: #38a2c5;
+    font-family: 微软雅黑;
+    font-size:0.6em;
+     font-weight: bold;
+     border-radius: 5px 5px 5px 5px;
+
+}
+.yjl{
+    padding: 0.7em ;
+    color:#fff;
+    z-index: 9999;
+}
+.yjll{
+    padding: 0 0.2em   ;
+    color:#fff;
+    
+    background: #124758;
+      border-radius: 5px 5px 5px 5px;
+    
+}
+.sc-sub1 {
+    background-color: #8d8d8d;
+    font-family: 微软雅黑;
+    font-size:0.6em;
+     font-weight: bold;
+     border-radius: 5px 5px 5px 5px;
+
+}
+
+.duan
+{
+    float:right;
+    width: 70px;
+     margin:10px 5px 5px 5px ; 
+}
+.fonthj
+{
+    font-size: 8em;
+}
+.hjtotal
+{
+      float:right;
+      padding: 10px 20px 0 0;
+     
+        
+}
+.ret{
+    font-size: 0.9em;
+}
+.mg{
+    margin: 1em 1em 0 1em;
+}
+.mg1{
+    margin-right:1.1em ;
+}
+
+
+

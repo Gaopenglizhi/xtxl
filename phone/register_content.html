@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="select/css/chosen.css">
+        <link rel="stylesheet" href="register_content/css/main.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver uinn-a1">
+           
+              <div class="umar-a  bc-border ">
+                        <div class="ub ub-ac ubb umh5 bc-border " >
+                          <div class=" uinput ub ub-f1"  >
+                                 <img class="uinn fa loginimg1 loginstyle"></img>
+                                 <input placeholder="请输入您的手机号" type="text"   class="ub-f1 logininput1"   id="mobile"><div style="float: left;margin-top: 1.6em;">
+                             <span class="  yjll" style="    font-size:small;   "   onclick="yz();">发送验证码</span></div>
+                                 <img src="login_content/css/myImg/cha.png" class="uinn loginimg2" onclick="qk();" ></img>
+                            </div>
+                        </div>
+                             <div class="ubb ub ub-ac umh5 bc-border" style="bottom: 0.1em">
+                            <div class=" uinput ub ub-f1 ">
+                                <img class="uinn fa loginimg1 loginstyle"></img>
+                                <input placeholder="验证码"  class=" ub-f1 logininput1"  id="yzm">
+                                <img src="login_content/css/myImg/cha.png" class="uinn loginimg2" onclick="qk1();" ></img>
+                            </div>
+                        </div>
+            </div>  
+                 <div class="ub ub-ac ubb umh5 bc-border" style="top: 0.5em">
+                      <div class="ulev-app1  umw4 uinput" >
+                     <input placeholder="所属地区"   disabled="disabled" type="text" style="padding: 1.0em;width: 8em">
+                      
+                      </div>
+                     
+            </div>  
+             <div class="ub ub-ac ubb umh5 bc-border" style="top: 0.5em">
+                  &nbsp;&nbsp;    <div class="ulev-app1  umw4 uinput"  >
+                             <div class="select uba bc-border bc-text" style="float: left;">
+                    <div class="sheng">
+                                                         请选择
+                    </div>
+                    <div class="icon"></div>
+                    <select id="selProvince1"  onchange="city();">
+                     
+                      </select>
+                </div> 
+                        <div class="select uba bc-border bc-text" style="float: left;">
+                    <div class="shi" id="shia">
+                        请选择
+                    </div>
+                    <div class="icon"></div>
+                     <select id="selCity1"     >
+                  
+                  </select>
+                </div>   
+                  
+                      
+                      </div>
+                     
+            </div>  
+                          <div class="ubb ub ub-ac umh5 bc-border" style="bottom: 0.1em">
+                            <div class=" uinput ub ub-f1 ">
+                                <img class="uinn fa loginimg1 loginstyle"></img>
+                                <input placeholder="请输入您的密码" type="password" class=" ub-f1 logininput1"  id="pwd">
+                                <img src="login_content/css/myImg/cha.png" class="uinn loginimg2" onclick="qk1();" ></img>
+                            </div>
+                        </div>
+                      <div class="ubb ub ub-ac umh5 bc-border" style="bottom: 0.1em">
+                            <div class=" uinput ub ub-f1 ">
+                                <img class="uinn fa loginimg1 loginstyle"></img>
+                                <input placeholder="确认密码" type="password" class=" ub-f1 logininput1"  id="pwd1">
+                                <img src="login_content/css/myImg/cha.png" class="uinn loginimg2" onclick="qk1();" ></img>
+                            </div>
+                        </div>
+                
+                    </div>
+  
+ 
+
+            <div class="ub ub-ver">
+                <div class="ub ub-pe uinn-a6 ulev-4">
+                    <div class="sc-text">
+                        我同意
+                    </div>
+                    <div class="sc-text-active">
+                        用户服务协议
+                    </div>
+                </div>
+                <div class="uinn-at1">
+                    <center>
+                    <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a " id="register">
+                        注册
+                    </div></center>
+                </div>
+                 <div  class="uinn-at1">
+                    <div id="dl" class=" ub ub-pc ">
+                        已有账号？立即登陆 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+     <!--   <script src="js/provinceCityDatas.js"></script>-->
+        <script src="js/yangyan.js"></script>
+        <script src="js/md5.js"></script>
+        <script src="js/ty.js"></script>
+    
+    </body>
+    <script>
+
+
+ 
+ /*
+   $(function() {
+      // 闁荤姳绀佹晶浠嬫偪閸℃稒鍎戝ù锝呭槻閺佹粓鏌℃担鍝勵暭鐎规搫鎷�         setProvince();
+         });*/
+ 
+ 
+        var cs='';
+        var sf='';
+        var url='';
+        var url1='';
+        var str='';
+        var str1='';
+        var index1='';
+        var index2='';
+        var unicode='';
+        var unicode1='';
+        appcan.ready(function() {
+            sheng();
+            appcan.initBounce();    
+        })
+        appcan.button("#register", "ani-act", function() {
+            var mobile = $("#mobile").val();
+            var sf = $("#selProvince1").val();
+            var sq = $("#selCity1").val();
+            //var yzm=$("#yzm").val();
+            var pwd = $("#pwd").val();
+            var pwd1 = $("#pwd1").val();
+             var mbwt ="1";
+            var mbda ="1";
+            var yzm=$("#yzm").val();
+                  index1=document.getElementById("selProvince1").value;
+           index2=document.getElementById("selCity1").value
+         
+             if( $("#shia").text()=='请选择' ){
+                appcan.window.openToast("请选择地区", 3000, 5, 0)
+                return;
+          }
+           if(!isDefine(mobile)){
+                appcan.window.openToast("请输入手机号码", 3000, 5, 0)
+                return;
+          }  else if (!isDefine(pwd)) {
+                appcan.window.openToast("密码不能为空哦！", 3000, 5, 0)
+                return;
+            } else if (!isDefine(yzm)) {
+                appcan.window.openToast("验证码不能为空哦！", 3000, 5, 0)
+                return;
+            }else if (pwd.length<6||pwd.length>20) {
+                appcan.window.openToast("密码必须是6-20位！", 3000, 5, 0)
+                return;
+            }else if (pwd1 !=pwd) {
+                appcan.window.openToast("两次密码输入不一致", 3000, 5, 0)
+            } else if (!isDefine(mbwt)) {
+                appcan.window.openToast("密保问题不能为空哦！", 3000, 5, 0)
+                return;
+            } else if (!isDefine(mbda)) {
+                appcan.window.openToast("密保答案不能为空哦！", 3000, 5, 0)
+                return;
+            } else if (yzsj(mobile)==false) {
+                appcan.window.openToast("手机号错误", 3000, 5, 0)
+                return;
+            } else {
+                unicode = encodeURI(mbwt);
+                unicode1 = encodeURI(mbda);
+                checkcode=md5(pwd).toUpperCase();
+                jsonStr='{"UserName":"'+mobile+'","Pwd":"'+checkcode+'","ShengId":"'+index1+'","ShiId":"'+index2+'","WenTi":"'+unicode+'","Code":"'+yzm+'","DaAn":"'+unicode1+'"}';
+                url = GetPostUrl.gUrl() +"/MobileService.asmx/Reg?jsonStr="+jsonStr;
+              console.log(url);
+                 $.ajax({dataType:'text',
+                url :url,
+                type : 'GET',                            
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                        if (data.Error.ErrorCode=='0') {
+                             
+                                   alert(data.Error.ErrorMessage); 
+                                   appcan.window.open({
+                                                       name : "login",
+                                                       data : "login.html"
+                                                   });     
+                                            
+                        }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else if(data.Error.ErrorCode == '1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                  },
+                    error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('注册失败!','2000',5,0);
+                  } 
+                })
+            }
+        })
+
+
+  function yz() {
+      var mo=$("#mobile").val();
+        if(!isDefine(mo)){
+                appcan.window.openToast("请输入手机号码", 3000, 5, 0)
+                return;
+          } else if (yzsj(mo)==false) {
+                appcan.window.openToast("手机号错误", 3000, 5, 0)
+                return;
+            }
+            else{
+          
+    
+              var u=GetPostUrl.gUrl() +'MobileService.asmx/SendSMS?jsonStr={\"mobile\":\"'+mo+'\"}';
+            
+              $.ajax({
+                  dataType:'text',
+                url :u,
+                type : 'GET',                           
+                data : {
+
+                },
+                                           
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+
+                       
+                        appcan.window.openToast("验证码已发送",'2000',5,0);
+                         
+                        
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('网络出错了!','2000',5,0);
+                }
+            });
+
+    }     }
+           function sheng() {
+               url1=GetPostUrl.gUrl() +'MobileService.asmx/GetShengShi?jsonStr=""';
+              $.ajax({dataType:'text',
+                url :url1,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+
+                      for(var i=0;i<data.Result.length;i++){
+                       
+                             str +='<option value="'+data.Result[i].ProvinceId+'">'
+                                 +data.Result[i].ProvinceName       
+                                 +'</option>';
+                          }
+                          $('#selProvince1').append(str);
+                          
+                          
+                       var ProvinceId=document.getElementById("selProvince1").value; 
+
+                        for(var a=0;a<data.Result.length;a++){
+                         
+                         if(data.Result[a].City!==null){
+                            for(var b=0;b<data.Result[a].City.length;b++){
+                              
+                                if(ProvinceId==data.Result[a].City[b]._pid){
+                                  str1 +='<option value="'+data.Result[a].City[b]._id+'">'
+                                 +data.Result[a].City[b]._cityname    
+                                 +'</option>';
+                                 
+                            }  
+                          }   
+                       }
+                           
+                          
+                          
+                      }
+
+                        
+                        $('#selCity1').append(str1);
+                        
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('网络出错了!','2000',5,0);
+                }
+            });
+
+    }     
+    
+    function city(){
+        var ProvinceId=document.getElementById("selProvince1").value;
+        if(ProvinceId!=0){
+            shi();
+             $("#shia").text('请选择');
+        }
+    }
+    
+    function shi() {
+               url1=GetPostUrl.gUrl() +'MobileService.asmx/GetShengShi?jsonStr=""';
+            $.ajax({dataType:'text',
+                url :url1,
+                type : 'GET',                           
+                data : {
+
+                },
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) {
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+                       
+                       $('#selCity1').html('');
+                       str1="";
+                       var ProvinceId=document.getElementById("selProvince1").value; 
+                          
+                        for(var a=0;a<data.Result.length;a++){
+                         
+                         if(data.Result[a].City!==null){
+                            for(var b=0;b<data.Result[a].City.length;b++){
+                               
+                                if(ProvinceId==data.Result[a].City[b]._pid){
+                                     
+                                  str1 +='<option value="'+data.Result[a].City[b]._id+'">'
+                                 +data.Result[a].City[b]._cityname    
+                                 +'</option>';
+                             
+                            }  
+                          }   
+                       }
+                           
+                          
+                          //console.log('999999=='+str1);
+                      }
+                        
+                        //console.log('999999=='+str1);
+                        $('#selCity1').append(str1);
+                         
+                        str1="";
+                     }else if(data.Error.ErrorCode == '-1'){
+                        appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 appcan.window.openToast('登录失败!','2000',5,0);
+                }
+            });
+
+    }   
+      appcan.button("#dl", "ani-act", function() {
+       appcan.window.open({
+             name : "login",
+              data : "login.html"
+                                                
+                });
+      })
+            var InterValObj; //timer变量，控制时间
+            var count = 60; //间隔函数，1秒执行
+            var curCount;//当前剩余秒数
+            
+//发送验证码
+             appcan.button("#btnSendCode", function() {
+             var mobile = $("#mobile").val();
+            if(!isDefine(mobile)){
+              appcan.window.openToast("请输入手机号码", 3000, 5, 0)
+              return;
+          }else if (yzsj(mobile)==false) {
+                appcan.window.openToast("手机号错误", 3000, 5, 0)
+                return;
+            } else{
+              sendMessage();
+          }
+       })
+          
+            function sendMessage() {
+  　                        curCount = count;
+　　                      //设置button效果，开始计时
+            $("#btnSendCode").attr("onclick","");//停止按钮
+            $("#btnSendCode").html("" + curCount + "秒");
+            InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+　　                         //向后台发送处理数据
+/*
+            $.ajax({
+     銆�              銆�ype: "POST", //鐢≒OST鏂瑰紡浼犺緭
+     銆��         dataType: "text", //鏁版嵁鏍煎紡:JSON
+     銆��   url: 'Login.ashx', //鐩爣鍦板潃
+    銆��    data: "dealType=" + dealType +"&uid=" + uid + "&code=" + code,
+    銆�� error: function (XMLHttpRequest, textStatus, errorThrown) { },
+     銆��success: function (msg){ }
+     });*/
+
+    } 
+
+//timer处理函数
+function SetRemainTime() {
+            if (curCount == 0) {                
+                window.clearInterval(InterValObj);//停止计时器
+              var hm= $("#mobile").val();
+                 $("#btnSendCode").attr("onclick","sendMessage()");//启用按钮
+                 $("#btnSendCode").html("重新发送验证码");  
+                               
+            }
+            else {
+                curCount--;
+                $("#btnSendCode").html("" + curCount + "秒");
+            }
+        }
+        function qk(){
+          var mobile=$("#mobile").val();  
+          if(mobile!=""){
+            mobile="";
+           document.getElementById('mobile').value = mobile;
+          }
+          
+        }
+   function qk1(){
+          var pwd=$("#pwd").val(); 
+         if(pwd!=""){
+              pwd="";
+           document.getElementById('pwd').value = pwd;
+          }
+          
+        } 
+         function qk2(){
+          var mbwt=$("#mbwt").val(); 
+         if(mbwt!=""){
+              mbwt="";
+           document.getElementById('mbwt').value = mbwt;
+          }
+          
+        } 
+         function qk3(){
+          var mbda=$("#mbda").val(); 
+         if(mbda!=""){
+              mbda="";
+           document.getElementById('mbda').value = mbda;
+          }
+          
+        } 
+   function yzsj(str) {
+         var re = /^1\d{10}$/
+         if (re.test(str)) {
+             return true;
+           } else {
+            return false;
+             }
+         }
+                     //md5加密           
+       function md5(md5){
+          var Md5="";
+          Md5=hex_md5(md5); 
+          return Md5;    
+        }  
+        
+            appcan.select(".select",function(ele,value){
+         
+        });
+    </script>
+</html>

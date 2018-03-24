@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">       
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+         <link rel="stylesheet" href="css/ui-box.css"> <script type="text/javascript" src="js/ty.js"></script>
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/jiawen.css">
+ 
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>   
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">信经商 泰安也</h1>
+               
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" style="height: 100%" class="ub-f1 tx-l">
+
+            </div>
+            <!--content结束-->
+<div id="tabview" class="uf sc-bg ubt sc-border-tab">
+</div>
+ 
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.tab.js"></script>
+ </body>
+    <script>
+      var b=appcan.locStorage.getVal('ym')
+       
+     //微信修改  -50
+          var  titHeight = $('#header').offset().height-50;              
+            if(b==null){
+               b='0'; 
+            }              
+        appcan.ready(function() {
+            
+         appcan.window.subscribe('close_login',function(msg){
+              if(msg=='0'){
+                  appcan.window.close(-1);
+              } 
+
+              
+          })
+            
+ 
+         //if(window.localStorage["ym"]==0||window.localStorage["ym"]==null){
+            appcan.frame.open("content", "index_content.html" ,0, titHeight,"login"); 
+         //  }
+
+          
+                     
+                //  uexWindow.setMultilPopoverFlippingEnbaled(0);       
+    
+                     /*
+                     window.onorientationchange = window.onresize = function() {
+                                                 appcan.frame.resize("content", 0, top);
+                                             }*/
+                     
+      
+      
+        });
+                       
+
+        //uexWindow.onKeyPressed(0);
+
+       /*
+        appcan.button("#nav-left", "btn-act", function() {
+                   appcan.window.close(-1);
+               })
+               
+               appcan.button("#register", "btn-act", function() {
+                   
+               })
+       
+        function winclose(){
+            appcan.window.close(-1);
+        }*/
+  
+   var tabview = appcan.tab({
+    selector : "#tabview",
+    hasIcon : true,
+    hasAnim : false,
+    hasLabel : true, 
+    hasBadge : true,
+    index:b,
+    data : [{
+        label : "产品信息",
+        "icon":"fa-home"
+    }, {
+        label : "产品动态",
+        icon:"fa-list-ol",
+        badge:badgeCp()
+        
+    }, {
+        label : "个人中心",
+        "icon":"fa-user"
+       
+    },
+    {
+        label : "关于我们",
+        "icon":"fa-phone",
+      
+    }]
+});
+tabview.on("click",function(obj, index){
+    //微信修改  注释该处
+  //appcan.window.selectMultiPopover("content",index);
+  //微信修改 解注该处
+   switch (index)
+   {
+     case 0:
+     appcan.frame.open("content", "index_content.html" ,0, titHeight,"login");
+     break;
+    case 1:
+     appcan.frame.open("content", "hyxw_content.html", 0, titHeight,"login");
+     break;
+     case 2:
+  appcan.frame.open("content", "personal_content.html", 0, titHeight,"login");
+     break;
+   case 3:
+  appcan.frame.open("content", "aboutweixin_content.html", 0, titHeight,"login");
+    break;
+
+      } 
+
+})
+
+                                                                
+
+
+              window.uexOnload = function(type){
+                  
+                                  if(!type){
+                                     var plat = uexWidgetOne.getPlatform();
+                                   if(plat){
+                                     uexWindow.onKeyPressed=function(keyCode){
+                                    if(keyCode==0){
+                                   uexWidgetOne.exit(); 
+                                    }
+                                    
+                                 }
+                                    uexWindow.setReportKey(0,1);
+                            }
+                          }
+                           
+                         
+           }
+    
+       function yem(){
+           
+                       appcan.frame.open({
+                         id : "content",
+                         url : [{
+                             "inPageName" : "index_content",
+                             "inUrl" : "index_content.html",
+                         }, {
+                             "inPageName" : "hyxw_content",
+                             "inUrl" : "hyxw_content.html",
+                         }, {
+                             "inPageName" : "checkbox",
+                             "inUrl" : "personal_content.html",
+                         }, {
+                             "inPageName" : "about",
+                             "inUrl" : "about_content.html",
+                         }],
+                         top : titHeight,
+                         left : 0,
+                         index : b,
+                        change:function(index,res){                          
+                         //    console.log(index+" "+res);
+                             tabview.moveTo(res.multiPopSelectedIndex);
+                         }
+                     });
+                //  uexWindow.setMultilPopoverFlippingEnbaled(0);       
+               window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+               }  
+ 
+       }
+function badgeCp () {
+  if(  appcan.locStorage.getVal('indexBag')=="1")
+  {
+    var num="";
+      var id=  appcan.locStorage.getVal('userId');
+                var Uname= appcan.locStorage.getVal('userName');
+                  var code= appcan.locStorage.getVal('checkcode');
+         
+               
+                
+           
+      var  jsonStr='{"UserName":\"'+Uname+'\","CheckCode":\"'+code+'\","uid":\"'+id+'\" }';
+    
+     $.ajax({dataType:'text',
+                url :GetPostUrl.gUrl() +"MobileService.asmx/GetNewNum?jsonStr="+jsonStr,
+                type : 'GET',                           
+                data : {
+
+                },
+                async:false,
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',                            
+                success : function(data) { 
+                  
+                     data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));
+                    if (data.Error.ErrorCode=='0') {
+                if( data.Result[0].num!="0")
+                {
+                     num=  data.Result[0].num;
+               }
+                  }else if(data.Error.ErrorCode == '-1'){
+                       // appcan.window.openToast(data.Error.ErrorMessage,'2000',5,0);
+                    }else{
+                        //appcan.window.openToast('网络出错了!','2000',5,0);
+                    }
+                },
+              error : function(xhr, status, errMessage) {
+                 //appcan.window.openToast('登录失败!','2000',5,0);
+                }
+            });
+              appcan.locStorage.setVal('indexBag',"0");
+         return num;
+         
+ }
+ 
+}
+ </script>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+       <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box1.css">
+        <link rel="stylesheet" href="css/ui-base1.css">
+        <link rel="stylesheet" href="css/ui-color1.css">
+        <link rel="stylesheet" href="css/appcan.icon1.css">
+        <link rel="stylesheet" href="css/appcan.control1.css"> 
+        <link rel="stylesheet" href="css/style2.css">
+        <link rel="stylesheet" href="css/table.css">         
+        <link rel="stylesheet" href="order_content/css/main.css"> 
+    </head>
+    <style type='text/css'> 
+table{empty-cells:show;border-spacing:0}
+table{font-family:宋体;  green solid;background-color:white;}
+table td{text-align:center; }
+table .tabTh{color:green;font-weight:bold;background-color:#f1faee;}
+</style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver">
+            <div class="ub ub-ver ub-f1">
+                <div   class="uba bc-border c-wh">
+                    <ul  ontouchstart="appcan.touch('btn-act')" class=" ub bc-border bc-text ub-ac uinn-a9">
+                       <div   class=" ut ub-f1 ulev0 ut-s ">
+                            <div class="uh ub ">
+                                <div id="lx" onclick="disp_confirm()">
+                   <select id="cplx" style="width: 100%;height: 1.5em;font-size:1em;background-color: #FFFFFF;" >
+                      </select>  
+                                </div>
+                                <div class="ub-f1  tx-c" tabindex="0">
+                                      
+                       <select id="cpdy" style="width: 6em;height: 1.5em;font-size:1em; background-color: #FFFFFF;">
+                      </select>                                                    
+                                   </select>
+                                          
+                                </div>
+                                 <div class="nav-bt" id="nav-right">
+                              
+                      <select id="cpjg" style="width: 100%;height: 1.5em;font-size:1em;background-color: #FFFFFF;" >
+                      <option value="0">122</option>
+                      <option value="1">22</option>
+                      </select>   
+
+                           </div> 
+                       </div>
+                   </div>                 
+               </ul>   
+      <div id="div_Test3" style="OVERFLOW: auto;width:100%;height:100%;padding:0px">
+            <table id="tab_Test3"  class="ub-fh  tx-c altrowstable1">
+                 <tr id="tr1" class=" bc-border   ub-ac uinn-a91 tabletrwz">
+                  
+                 
+                 </tr>
+                    </table>             
+                   </div>             
+                </div>
+            </div>
+
+        </div>
+    </body>
+</body>
+        <script src="js/appcan.js"></script>       
+        <script src="js/appcan.control.js"></script>
+        <script  src="js/jquery-1.7.2.min.js"></script>
+        <script  src="js/TableFreeze.js"></script>
+        
+        <script>
+        var iszhankai = 'false';
+        var orderId;
+        var attachment;
+        var jsonImg=[];
+        var userId;
+        var isCollected;
+        var jsonStr="";
+        appcan.ready(function() {
+            
+            //表格滑动处理
+            $("#tab_Test3").FrozenTable(1,0,1);
+            getShopDetail();
+        });
+        
+        //获取产品价格
+        function getShopDetail() {
+            var url = GetPostUrl.gUrl() +'MobileService.asmx/GetCPLB?jsonStr=';
+          // console.log('url111=='+url);
+            $.ajax({
+                url : url,
+                type : 'GET',
+                data : {
+                },
+                dataType:'text',
+                
+                offline : true,
+                offlineDataPath : 'wgt://aaa/',
+                
+                success : function(data) {
+                     //$('#tab_Test3').html(''); 
+                     $('#tab_Test3').html('');
+                     $('#cplx').html(''); 
+                     $('#cpdy').html('');
+                     $('#cpjg').html('');
+                    data = JSON.parse(data.replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>","").replace("<string xmlns=\"http://tempuri.org/\">","").replace("</string>",""));            
+                //    console.log('data=='+data);
+                    var tr = '';
+                    var tr1 = '';
+                    var tr2 = '';
+                    var op1 = '';
+                    var op2 = '';
+                    var op3 = '';
+                    if (data.Error.ErrorCode=='0') {
+                        //展示数据    
+                      //  console.log('a=='+data.Error.ErrorCode);
+                      //  console.log('aa=='+data.Result[0].Value);           
+                               for (var i = 0; i < data.Result.length; i++) {
+                                   op1 += ' <option id=s' + i+ ' value ='+data.Result[i].Id+'>'+data.Result[i].Value+'</option>';                                    
+                                    for (var j = 0; j < data.Result[i].Result.length; j++) {                                                                                   
+                                     op2 += ' <option id=s' + i+ ' value ='+i+'>'+data.Result[i].Result[j].Value+'</option>';                                  
+                                     for (var a = 0; a < data.Result[i].Result[j].Result.length; a++) {                                                                                   
+                                     op3 += ' <option id=s' + i+ ' value ='+i+'>'+data.Result[i].Result[j].Result[a].Value+'</option>'; 
+                                   for (var b = 0; b < data.Result[i].Result[j].Result[a].Result.length; b++) {                                                                                   
+                                     tr += '<td class="ub-f1 uw-infor ut-s   umar-r-infor ulev-app1">'
+                                       +data.Result[i].Result[j].Result[a].Result[b].Value
+                                       +'</td>';
+                                     for (var c = 0; c < data.Result[i].Result[j].Result[a].Result[b].Result.length; c++) {                                                                                          
+                                      tr1 +='<tr  class=" bc-border   ub-ac uinn-a91  tabletrwz1 table2size floatLeft tablecolor tablecolor1">' 
+                                      +'<td id="class" class="ub-f1 uw-infor ut-s   umar-r-infor ulev-app1">'
+                                      +data.Result[i].Result[j].Result[a].Result[b].Result[c].Value
+                                      +'</td>'
+                                      for (var d = 0; d < data.Result[i].Result[j].Result[a].Result[b].Result[c].Result.length; d++) {                                                                                                                             
+                                      tr1 +='<td id="class" class="ub-f1 uw-infor ut-s   umar-r-infor ulev-app1" onclick="">'
+                                             +data.Result[i].Result[j].Result[a].Result[b].Result[c].Result[d].Value
+                                             +'</td>'
+                                             +'</tr>';                                
+                                          }  
+                                      
+                                                                          
+                                        } 
+                                      } 
+                                    } 
+                                 }
+                            }
+                            
+                          //  console.log('data1=='+tr1);
+                          //   console.log('data=='+tr);
+                             $('#tab_Test3').append('<tr id="tr1" class=" bc-border   ub-ac uinn-a91 tabletrwz"><td class="ub-f1  uw-infor ut-s   umar-r-infor ulev-app1 floatTop">规格</td>'+tr+'</tr>'+tr1);
+                             $('#cplx').append(op1);
+                             $('#cpdy').append(op2);
+                             $('#cpjg').append(op3);
+
+                             //$('#tab_Test3').append(str);
+                    }
+                }
+            });
+        }
+        //打开类型弹框 
+/*
+        function disp_confirm(){
+        var subhtml='<div id="alert_dialog_show_msg_box" style=" overflow:hidden;height:50%;width:60%;margin:8% auto;margin-left:auto;margin-right:auto;"><div class="sweet-overlay" tabIndex="-1" style=" background-color:#000; opacity:0.4; position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index:1000;"></div><div id="alert_show_3" style="height:200xp; width:120xp; background-color:#fff; color:#000; border-radius:8px;font-size:20px; text-align:center;z-index:2000;margin-left:auto;margin-right:auto;"><div class="button-holder"><div  class="bc-border "><ul  class=" ub bc-border bc-text ub-f1 ub-ac uinn-a9" style="margin:10px 0px 0 80px;"><input type="radio" id="radio-1-1" name="radio-1-set" class="regular-radio "  checked /><label  for="radio-1-1"></label><div style="left:30px;">浣庡帇鐢电紗</div><br /></ul><ul style="margin:0px 0px 0 80px;" class=" ub-f1 ub bc-border bc-text ub-ac uinn-a9" ><input type="radio" id="radio-1-2" name="radio-1-set" class="regular-radio" /><label for="radio-1-2"></label><div style="left:30px;">8.7/15KV</div><br /></ul><ul style="margin:0px 0px 0 80px;" class="ub-f1 ub bc-border bc-text ub-ac uinn-a9" ><input type="radio" id="radio-1-3" name="radio-1-set" class="regular-radio" /><label for="radio-1-3"></label><div style="left:30px;">26/35KV</div><br /></ul><ul style="margin:0px 0px 0 80px;" class="ub-f1 ub bc-border bc-text ub-ac uinn-a9" ><input type="radio" id="radio-1-4" name="radio-1-set" class="regular-radio" /><label for="radio-1-4"></label><div style="left:30px;">閾濆悎閲戠數缂�/div><br /></ul><ul style="margin:0px 0px 0 80px;" class="ub-f1 ub bc-border bc-text ub-ac uinn-a9" ><input type="radio" id="radio-1-5" name="radio-1-set" class="regular-radio" /><label for="radio-1-5"></label><div style="left:30px;">鐢电嚎</div><br /></ul></div><ul style="margin:0px 0px 0 80px;" class="ub-f1 ub bc-border bc-text ub-ac uinn-a9" ><input type="radio" id="radio-1-6" name="radio-1-set" class="regular-radio" /><label for="radio-1-6"></label><div style="left:30px;">鏋剁┖缁濈紭鐢电紗</div><br /></ul></div><input name="button" onclick="closedShowMsg()" type="button" value="纭" style=" width:80px; height:40px; line-height:30px;"/></div>';         
+        $("body").append(subhtml);
+  }*/
+
+  //关闭弹框
+  function closedShowMsg(){
+        if(document.getElementById("radio-1-1").checked){
+            $("#lx").html("低压电缆");
+        }else if(document.getElementById("radio-1-2").checked){
+            $("#lx").html("8.7/15KV");
+        }else if(document.getElementById("radio-1-3").checked){
+            $("#lx").html("26/35KV");
+        }else if(document.getElementById("radio-1-4").checked){
+            $("#lx").html("铝合金电缆");
+        }else if(document.getElementById("radio-1-5").checked){
+            $("#lx").html("电线");
+        }else if(document.getElementById("radio-1-6").checked){
+            $("#lx").html("架空绝缘电缆");
+        }
+        $("#alert_dialog_show_msg_box").remove();
+    }
+
+        </script>
+</html>

@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>无标题文档</title>
+</head>
+    <script type="text/javascript">
+    var a=0;
+    function add(){
+        alert("j");
+        var o=document.getElementById("PhotoLabel");
+        var div=document.createElement("div");
+        div.id = div.name = "d"+ a;  
+        div.innerHTML=o.innerHTML.replace(//{0/}/ig,a);
+        document.getElementById("addPhotoLabel").appendChild(div);
+        //document.write(document.getElementById("addPhotoLabel").innerHTML);
+        alert(document.getElementById("addPhotoLabel").innerHTML);
+        a++;
+    }
+    //window.onload =  function(){add();}
+    function deleteDiv(){
+     var oDiv= document.getElementById("d2");
+      document.getElementById("addPhotoLabel").removeChild(oDiv); 
+    }
+    </script>
+<body>
+<div id="PhotoLabel">
+safasfdgdag
+<a>aasscc</a>
+</div>
+<div id="addPhotoLabel"></div>
+<button type="button" id="l" onclick="javascript:add()">增加</button>
+<span  style="font-size: 15px"></span>
+<a href="javascript:deleteDiv();"><span style="font-size: 15px">删除第二个</span></a>
+</body>
+</html>
